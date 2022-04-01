@@ -1,0 +1,19 @@
+.twitterAuth {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+
+  a.btn {
+    background-color: white;
+    color: green;
+    text-transform: none;
+
+    &:hover {
+      background-color: #e1ffff;
+    }
+  }
+
+  span {
+    margin: 0 5px;
+  }
+}
