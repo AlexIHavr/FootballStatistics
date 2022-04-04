@@ -29,13 +29,12 @@ class TwitterController {
         oAuthTokenSecret: cookieService.getCookie(req, OAUTH_TOKEN_SECRET),
       });
 
-      const user = await userService.getById(cookieService.getCookie(req, 'userId'));
+      const user = await userService.findOne({ userName });
 
       if (user) {
-        await userService.update(user, { ...oAuthAccessTokens, userName });
+        await userService.update(user, { ...oAuthAccessTokens });
       } else {
-        const newUser = await userService.create({ oAuthAccessTokens, userName });
-        cookieService.setCookie(res, 'userId', newUser._id);
+        await userService.create({ oAuthAccessTokens, userName });
       }
 
       cookieService.deleteCookie(res, OAUTH_TOKEN_SECRET);

@@ -31,7 +31,7 @@ const TwitterAuth: React.FC = () => {
     const { oauth_token, oauth_verifier } = queryString.parse(window.location.search);
     if (oauth_token && oauth_verifier) {
       await dispatch(twitterLogin(oauth_token as string, oauth_verifier as string));
-      window.location.href = '/';
+      window.history.pushState({}, '', '/');
     }
   }, [dispatch]);
 

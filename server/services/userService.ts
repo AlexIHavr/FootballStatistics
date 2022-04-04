@@ -2,6 +2,7 @@ import { userSchemaType } from './../types/userTypes';
 import ApiError from '../errors/ApiError';
 import userModel from '../models/userModel';
 import { twitterLoginResponseType } from '../types/twitterTypes';
+import { FilterQuery } from 'mongoose';
 
 class UserService {
   async create({
@@ -19,7 +20,7 @@ class UserService {
   }
 
   async checkAuth(oAuthAccessToken: string) {
-    const user = await this.get(oAuthAccessToken);
+    const user = await this.findOne({ oAuthAccessToken });
 
     if (!user) {
       throw ApiError.Unauthorized('Invalid oAuth access token.');
@@ -29,25 +30,17 @@ class UserService {
   }
 
   async logout(oAuthAccessToken: string) {
-    const user = await this.get(oAuthAccessToken);
+    const user = await this.findOne({ oAuthAccessToken });
 
     if (!user) {
       throw ApiError.Unauthorized('Invalid oAuth access token.');
-    } else {
-      user.oAuthAccessToken = '';
-      user.oAuthAccessTokenSecret = '';
-      await user.save();
-      return user;
     }
-  }
 
-  async get(oAuthAccessToken: string) {
-    const user = await userModel.findOne({ oAuthAccessToken });
     return user;
   }
 
-  async getById(id: string) {
-    const user = await userModel.findById(id);
+  async findOne(filterObj: FilterQuery<userSchemaType>) {
+    const user = await userModel.findOne(filterObj);
     return user;
   }
 }
