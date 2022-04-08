@@ -1,3 +1,4 @@
 export default {
-  API_URL: 'http://localhost:3001/api',
+  SERVER_API: 'http://localhost:3001/api',
+  FOOTBALL_API: 'https://api.football-data.org/v2',
 };

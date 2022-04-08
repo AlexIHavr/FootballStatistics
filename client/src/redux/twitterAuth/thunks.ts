@@ -1,8 +1,6 @@
+import { twitterLoginResponseType, checkAuthResponseType } from './types';
 import { OAUTH_ACCESS_TOKEN } from './constants';
-import { checkAuthResponseType } from './../../../../server/types/userTypes';
-import { userApi } from './../../api/serverApi';
-import { twitterLoginResponseType } from './../../../../server/types/twitterTypes';
-import { twitterApi } from '../../api/serverApi';
+import { userApi, twitterApi } from '../../api/api';
 import { dispatchType } from '../store';
 import { setAuthData } from './reducer';
 

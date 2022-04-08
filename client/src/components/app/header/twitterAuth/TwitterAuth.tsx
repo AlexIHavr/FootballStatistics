@@ -1,10 +1,10 @@
 import { useCallback, useEffect } from 'react';
-import { twitterApi } from '../../../../api/serverApi';
+import { twitterApi } from '../../../../api/api';
 import queryString from 'query-string';
 import './twitterAuth.scss';
 import { checkIsAuth, twitterLogin, twitterLogout } from '../../../../redux/twitterAuth/thunks';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { oAuthRequestTokenType } from '../../../../types/twitterAuth';
+import { oAuthRequestTokenType } from '../../../../redux/twitterAuth/types';
 import { OAUTH_ACCESS_TOKEN } from '../../../../redux/twitterAuth/constants';
 
 const TwitterAuth: React.FC = () => {

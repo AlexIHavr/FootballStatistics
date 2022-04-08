@@ -22,6 +22,8 @@ module.exports = {
     semi: 0,
     quotes: 0,
     camelcase: 0,
+    curly: 0,
+    'spaced-comment': 0,
     'comma-dangle': 0,
     'no-undef': 0,
     'no-unused-vars': 1,

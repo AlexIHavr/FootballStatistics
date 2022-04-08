@@ -4,6 +4,7 @@ import './preloader.scss';
 
 const Preloader: React.FC = () => {
   const { isLoading } = useAppSelector((store) => store.twitterAuth);
+
   return (
     <div className={classNames('preloader-wrapper big', { active: isLoading })}>
       <div className="spinner-layer spinner-green-only">

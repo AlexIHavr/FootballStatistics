@@ -1,3 +1,9 @@
+export type initialStateType = {
+  isAuth: boolean;
+  userName: string;
+  isLoading: boolean;
+};
+
 export type oAuthRequestTokenType = {
   oAuthToken: string;
   oAuthTokenSecret: string;

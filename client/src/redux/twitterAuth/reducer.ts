@@ -1,12 +1,7 @@
+import { initialStateType } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-type twitterAuthState = {
-  isAuth: boolean;
-  userName: string;
-  isLoading: boolean;
-};
-
-const initialState: twitterAuthState = {
+const initialState: initialStateType = {
   isAuth: false,
   userName: '',
   isLoading: false,

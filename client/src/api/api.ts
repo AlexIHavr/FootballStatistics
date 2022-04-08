@@ -5,17 +5,17 @@ import { setIsLoading } from '../redux/twitterAuth/reducer';
 
 const setInterceptors = (api: AxiosInstance) => {
   api.interceptors.request.use((config) => {
-    store.dispatch(setIsLoading(true));
+    if (!store.getState().twitterAuth.isLoading) store.dispatch(setIsLoading(true));
     return config;
   });
 
   api.interceptors.response.use(
     (config) => {
-      store.dispatch(setIsLoading(false));
+      if (store.getState().twitterAuth.isLoading) store.dispatch(setIsLoading(false));
       return config;
     },
     (err) => {
-      store.dispatch(setIsLoading(false));
+      if (store.getState().twitterAuth.isLoading) store.dispatch(setIsLoading(false));
       throw err;
     }
   );
@@ -23,12 +23,20 @@ const setInterceptors = (api: AxiosInstance) => {
 
 export const twitterApi = axios.create({
   withCredentials: true,
-  baseURL: `${config.API_URL}/twitter`,
+  baseURL: `${config.SERVER_API}/twitter`,
 });
 setInterceptors(twitterApi);
 
 export const userApi = axios.create({
   withCredentials: true,
-  baseURL: `${config.API_URL}/user`,
+  baseURL: `${config.SERVER_API}/user`,
 });
 setInterceptors(userApi);
+
+export const footballApi = axios.create({
+  baseURL: `${config.FOOTBALL_API}/`,
+  headers: {
+    'X-Auth-Token': process.env.REACT_APP_FOOTBALL_API_X_AUTH_TOKEN as string,
+  },
+});
+setInterceptors(footballApi);

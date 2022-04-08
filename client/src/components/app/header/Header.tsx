@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import { URLS } from '../../../constants/app';
 import './header.scss';
 import TwitterAuth from './twitterAuth/TwitterAuth';
 
@@ -6,16 +7,15 @@ const Header: React.FC = () => {
   return (
     <nav>
       <div className="nav-wrapper">
-        <NavLink to="/" className="brand-logo">
-          Football statistics
-        </NavLink>
+        <span className="brand-logo">Football statistics</span>
         <ul id="nav-mobile" className="left">
-          <li className="tableItem">
-            <NavLink to="/table">table</NavLink>
-          </li>
-          <li className="teamsItem">
-            <NavLink to="/teams">teams</NavLink>
-          </li>
+          {Object.entries(URLS).map((url) => {
+            return (
+              <li key={url[0]}>
+                <NavLink to={url[1]}>{url[0]}</NavLink>
+              </li>
+            );
+          })}
         </ul>
         <TwitterAuth />
       </div>

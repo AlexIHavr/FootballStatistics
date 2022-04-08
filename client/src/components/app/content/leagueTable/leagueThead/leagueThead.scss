@@ -1,0 +1,35 @@
+.leagueTable thead {
+  position: relative;
+  color: white;
+  background-color: #209030;
+
+  .leagueSelectors {
+    display: flex;
+    position: absolute;
+    top: -99%;
+    left: -1px;
+    width: calc(100% + 2px);
+    border: 0;
+
+    th {
+      background-color: #d2e9d5;
+      flex-grow: 1;
+      cursor: pointer;
+      padding: 5px 10px;
+
+      &:not(:first-child):not(:last-child) {
+        margin: 0 4px;
+      }
+
+      &.active {
+        background-color: #209030;
+      }
+
+      border-radius: 4px 4px 0 0;
+      -webkit-border-radius: 4px 4px 0 0;
+      -moz-border-radius: 4px 4px 0 0;
+      -ms-border-radius: 4px 4px 0 0;
+      -o-border-radius: 4px 4px 0 0;
+    }
+  }
+}
