@@ -1,13 +1,13 @@
 import { shortLeagueNames } from './constants';
 
-export type shortLeagueNamesType = keyof typeof shortLeagueNames;
+export type ShortLeagueNames = keyof typeof shortLeagueNames;
 
-export type leagueSelectorType = {
+export type LeagueSelector = {
   name: string;
-  shortName: shortLeagueNamesType;
+  shortName: ShortLeagueNames;
 };
 
-export type leagueTableResponseType = {
+export type LeagueTableResponse = {
   position: number;
   team: {
     id: number;
@@ -25,10 +25,15 @@ export type leagueTableResponseType = {
   goalDifference: number;
 }[];
 
-export type initialStateType = {
-  selectedLeagueSelector: leagueSelectorType;
+export type InitialState = {
+  selectedLeagueSelector: LeagueSelector;
   leagueTableData: Partial<{
     -readonly // eslint-disable-next-line no-unused-vars
-    [index in shortLeagueNamesType]: leagueTableResponseType;
+    [index in ShortLeagueNames]: LeagueTableResponse;
   }>;
+};
+
+export type LeagueTableData = {
+  shortName: ShortLeagueNames;
+  table: LeagueTableResponse;
 };

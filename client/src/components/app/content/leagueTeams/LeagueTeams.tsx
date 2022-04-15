@@ -1,21 +1,11 @@
-import {
-  Avatar,
-  FormControl,
-  List,
-  ListItem,
-  ListItemAvatar,
-  ListItemText,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from '@mui/material';
+import { Grid, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useCallback, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { LEAGUE_SELECTORS } from '../../../../redux/leagueTable/constants';
 import { setSelectedLeagueSelector } from '../../../../redux/leagueTable/reducer';
-import { shortLeagueNamesType } from '../../../../redux/leagueTable/types';
-import { leagueTeamsDataRequest } from '../../../../redux/leagueTeams/thunks';
+import { ShortLeagueNames } from '../../../../redux/leagueTable/types';
+import { setLeagueTeams } from '../../../../redux/leagueTeams/thunks';
+import TeamItem from '../../../common/teamItem/TeamItem';
 import './leagueTeams.scss';
 
 const LeagueTeams: React.FC = () => {
@@ -26,7 +16,7 @@ const LeagueTeams: React.FC = () => {
   } = useAppSelector((state) => state);
 
   const selectLeagueSelector = useCallback(
-    (e: SelectChangeEvent<shortLeagueNamesType>) => {
+    (e: SelectChangeEvent<ShortLeagueNames>) => {
       dispatch(
         setSelectedLeagueSelector(
           LEAGUE_SELECTORS.find(({ shortName }) => shortName === e.target.value) ||
@@ -39,7 +29,7 @@ const LeagueTeams: React.FC = () => {
 
   useEffect(() => {
     if (!leagueTeamsData[selectedLeagueSelector.shortName]?.length)
-      dispatch(leagueTeamsDataRequest(selectedLeagueSelector.shortName));
+      dispatch(setLeagueTeams(selectedLeagueSelector.shortName));
   }, [dispatch, leagueTeamsData, selectedLeagueSelector]);
 
   return (
@@ -49,42 +39,29 @@ const LeagueTeams: React.FC = () => {
           <span className="card-title">{selectedLeagueSelector.name}</span>
         </div>
       </div>
-      <FormControl className="leagueSelectors">
-        <Select
-          onChange={selectLeagueSelector}
-          value={selectedLeagueSelector.shortName}
-          id="demo-simple-select"
-        >
-          {LEAGUE_SELECTORS.map(({ name, shortName }) => (
-            <MenuItem key={shortName} value={shortName}>
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <List className="teamsList">
+
+      <Select
+        onChange={selectLeagueSelector}
+        value={selectedLeagueSelector.shortName}
+        id="demo-simple-select"
+        className="leagueSelectors"
+      >
+        {LEAGUE_SELECTORS.map(({ name, shortName }) => (
+          <MenuItem key={shortName} value={shortName}>
+            {name}
+          </MenuItem>
+        ))}
+      </Select>
+
+      <Grid container spacing={2} className="teamsList">
         {leagueTeamsData[selectedLeagueSelector.shortName]?.map(
           ({ id, name, shortName, crestUrl }) => (
-            <div key={id} className="teamItemWrapper">
-              <ListItem alignItems="center" className="teamItem">
-                <ListItemAvatar>
-                  <Avatar className="teamItemAvatar" src={crestUrl} />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={<Link to="/">{name}</Link>}
-                  secondary={
-                    <>
-                      <span>shortName: {shortName}</span>
-                      <br />
-                      <a className="addToFavorites waves-effect btn">Add team to favorites</a>
-                    </>
-                  }
-                />
-              </ListItem>
-            </div>
+            <Grid item xs={6} key={id} className="teamItemWrapper">
+              <TeamItem id={id} name={name} shortName={shortName} crestUrl={crestUrl} />
+            </Grid>
           )
         )}
-      </List>
+      </Grid>
     </div>
   );
 };

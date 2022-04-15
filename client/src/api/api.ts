@@ -34,7 +34,7 @@ export const userApi = axios.create({
 setInterceptors(userApi);
 
 export const footballApi = axios.create({
-  baseURL: `${config.FOOTBALL_API}/`,
+  baseURL: `${config.FOOTBALL_API}`,
   headers: {
     'X-Auth-Token': process.env.REACT_APP_FOOTBALL_API_X_AUTH_TOKEN as string,
   },

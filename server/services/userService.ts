@@ -1,20 +1,20 @@
-import { userSchemaType } from './../types/userTypes';
+import { UserSchema } from './../types/userTypes';
 import ApiError from '../errors/ApiError';
 import userModel from '../models/userModel';
-import { twitterLoginResponseType } from '../types/twitterTypes';
+import { TwitterLoginResponse } from '../types/twitterTypes';
 import { FilterQuery } from 'mongoose';
 
 class UserService {
   async create({
     userName,
     oAuthAccessTokens: { oAuthAccessToken, oAuthAccessTokenSecret },
-  }: twitterLoginResponseType) {
+  }: TwitterLoginResponse) {
     const newUser = await userModel.create({ userName, oAuthAccessToken, oAuthAccessTokenSecret });
 
     return newUser;
   }
 
-  async update(user: userSchemaType, updatedObj: Partial<userSchemaType>) {
+  async update(user: UserSchema, updatedObj: Partial<UserSchema>) {
     const updatedUser = await user.updateOne(updatedObj);
     return updatedUser;
   }
@@ -39,7 +39,7 @@ class UserService {
     return user;
   }
 
-  async findOne(filterObj: FilterQuery<userSchemaType>) {
+  async findOne(filterObj: FilterQuery<UserSchema>) {
     const user = await userModel.findOne(filterObj);
     return user;
   }

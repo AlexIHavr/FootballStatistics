@@ -1,16 +1,45 @@
-export type twitterLoginRequestType = {
+export type TwitterLoginRequest = {
   oAuthVerifier: string;
-} & oAuthRequestTokenType;
+} & OAuthRequestToken;
 
-export type oAuthRequestTokenType = {
+export type OAuthRequestToken = {
   oAuthToken: string;
   oAuthTokenSecret: string;
 };
 
-export type twitterLoginResponseType = {
+export type TwitterLoginResponse = {
   oAuthAccessTokens: {
     oAuthAccessToken: string;
     oAuthAccessTokenSecret: string;
   };
   userName: string;
+};
+
+export type GetTweetsRequest = {
+  query: string;
+};
+
+export type GetTweetsResponse = {
+  username: string;
+  created_at: string;
+  id: string;
+  text: string;
+  author_id: string;
+}[];
+
+export type TwitterTweetsApiResponse = {
+  data: {
+    created_at: string;
+    id: string;
+    text: string;
+    author_id: string;
+  }[];
+};
+
+export type TwitterUsersApiResponse = {
+  data: {
+    id: string;
+    name: string;
+    username: string;
+  }[];
 };

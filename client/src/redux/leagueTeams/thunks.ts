@@ -1,19 +1,15 @@
+import { createAsyncThunk } from '@reduxjs/toolkit';
 import { footballApi } from './../../api/api';
-import { dispatchType } from './../store';
-import { shortLeagueNamesType } from './../leagueTable/types';
-import { setLeagueTeams } from './reducer';
+import { ShortLeagueNames } from './../leagueTable/types';
+import { LeagueTeams } from './types';
 
-export const leagueTeamsDataRequest =
-  (shortName: shortLeagueNamesType) => async (dispatch: dispatchType) => {
-    try {
-      const response = await footballApi.get(`competitions/${shortName}/teams`);
-      dispatch(
-        setLeagueTeams({
-          shortName,
-          teams: response.data.teams,
-        })
-      );
-    } catch (err) {
-      console.log(err);
-    }
-  };
+export const setLeagueTeams = createAsyncThunk<LeagueTeams, ShortLeagueNames>(
+  'setLeagueTeams',
+  async (shortName) => {
+    const response = await footballApi.get(`/competitions/${shortName}/teams`);
+    return {
+      shortName,
+      teams: response.data.teams,
+    };
+  }
+);

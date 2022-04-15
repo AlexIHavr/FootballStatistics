@@ -23,6 +23,7 @@ module.exports = {
     quotes: 0,
     camelcase: 0,
     curly: 0,
+    'react/prop-types': 0,
     'spaced-comment': 0,
     'comma-dangle': 0,
     'no-undef': 0,

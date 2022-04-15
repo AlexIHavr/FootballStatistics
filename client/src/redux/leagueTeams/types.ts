@@ -1,5 +1,5 @@
-import { shortLeagueNamesType } from './../leagueTable/types';
-export type leagueTeamsDataType = {
+import { ShortLeagueNames } from './../leagueTable/types';
+export type LeagueTeamsData = {
   id: number;
   area: {
     id: number;
@@ -19,9 +19,14 @@ export type leagueTeamsDataType = {
   lastUpdated: string;
 }[];
 
-export type initialStateType = {
+export type InitialState = {
   leagueTeamsData: Partial<{
     -readonly // eslint-disable-next-line no-unused-vars
-    [index in shortLeagueNamesType]: leagueTeamsDataType;
+    [index in ShortLeagueNames]: LeagueTeamsData;
   }>;
+};
+
+export type LeagueTeams = {
+  shortName: ShortLeagueNames;
+  teams: LeagueTeamsData;
 };

@@ -1,25 +1,24 @@
 import { useCallback, useEffect } from 'react';
-import { twitterApi } from '../../../../api/api';
 import queryString from 'query-string';
 import './twitterAuth.scss';
-import { checkIsAuth, twitterLogin, twitterLogout } from '../../../../redux/twitterAuth/thunks';
+import {
+  checkIsAuth,
+  setTwitterRequestTokenUrl,
+  twitterLogin,
+  twitterLogout,
+} from '../../../../redux/twitterAuth/thunks';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
-import { oAuthRequestTokenType } from '../../../../redux/twitterAuth/types';
 import { OAUTH_ACCESS_TOKEN } from '../../../../redux/twitterAuth/constants';
 
 const TwitterAuth: React.FC = () => {
-  const { isAuth, userName } = useAppSelector((store) => store.twitterAuth);
+  const { isAuth, userName, twitterRequestTokenUrl, isLoading } = useAppSelector(
+    (store) => store.twitterAuth
+  );
   const dispatch = useAppDispatch();
-  const goToTwitterRequestToken = useCallback(async () => {
-    try {
-      const response = await twitterApi.post<oAuthRequestTokenType>(`/oauth/getRequestToken`);
 
-      const { oAuthToken } = response.data;
-      window.location.href = `https://api.twitter.com/oauth/authenticate?oauth_token=${oAuthToken}`;
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
+  const goToTwitterRequestToken = useCallback(() => {
+    if (!twitterRequestTokenUrl && !isLoading) dispatch(setTwitterRequestTokenUrl());
+  }, [dispatch, twitterRequestTokenUrl, isLoading]);
 
   const twitterSignIn = useCallback(async () => {
     const oAuthAccessToken = localStorage.getItem(OAUTH_ACCESS_TOKEN);
@@ -29,22 +28,30 @@ const TwitterAuth: React.FC = () => {
     }
 
     const { oauth_token, oauth_verifier } = queryString.parse(window.location.search);
+
     if (oauth_token && oauth_verifier) {
-      await dispatch(twitterLogin(oauth_token as string, oauth_verifier as string));
+      await dispatch(
+        twitterLogin({ oauth_token: String(oauth_token), oauth_verifier: String(oauth_verifier) })
+      );
+
       window.history.pushState({}, '', '/');
     }
   }, [dispatch]);
 
   const twitterSignOut = useCallback(() => {
     const oAuthAccessToken = localStorage.getItem(OAUTH_ACCESS_TOKEN);
-    if (oAuthAccessToken) {
+    if (oAuthAccessToken && !isLoading) {
       dispatch(twitterLogout(oAuthAccessToken));
     }
-  }, [dispatch]);
+  }, [dispatch, isLoading]);
 
   useEffect(() => {
     twitterSignIn();
   }, [twitterSignIn]);
+
+  useEffect(() => {
+    if (twitterRequestTokenUrl) window.location.href = twitterRequestTokenUrl;
+  }, [twitterRequestTokenUrl]);
 
   return (
     <div className="twitterAuth">

@@ -1,11 +1,11 @@
-import { checkAuthRequestType, checkAuthResponseType } from './../types/userTypes';
+import { CheckAuthRequest, CheckAuthResponse } from './../types/userTypes';
 import { Request, Response, NextFunction } from 'express';
 import userService from '../services/userService';
 
 class UserController {
   async checkAuth(
-    req: Request<{}, {}, checkAuthRequestType>,
-    res: Response<checkAuthResponseType>,
+    req: Request<{}, {}, CheckAuthRequest>,
+    res: Response<CheckAuthResponse>,
     next: NextFunction
   ) {
     try {
@@ -17,7 +17,7 @@ class UserController {
     }
   }
 
-  async logout(req: Request<{}, {}, checkAuthRequestType>, res: Response, next: NextFunction) {
+  async logout(req: Request<{}, {}, CheckAuthRequest>, res: Response, next: NextFunction) {
     try {
       const user = await userService.logout(req.body.oAuthAccessToken);
       res.json(user);

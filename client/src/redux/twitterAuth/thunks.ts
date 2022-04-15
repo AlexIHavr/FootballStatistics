@@ -1,46 +1,59 @@
-import { twitterLoginResponseType, checkAuthResponseType } from './types';
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import {
+  TwitterLoginResponse,
+  CheckAuthResponse,
+  TwitterLoginQueryString,
+  OAuthRequestToken,
+} from './types';
 import { OAUTH_ACCESS_TOKEN } from './constants';
 import { userApi, twitterApi } from '../../api/api';
-import { dispatchType } from '../store';
 import { setAuthData } from './reducer';
+import { Dispatch } from '../store';
 
-export const twitterLogin =
-  (oauth_token: string, oauth_verifier: string) => async (dispatch: dispatchType) => {
-    try {
-      const response = await twitterApi.post<twitterLoginResponseType>(`/oauth/twitterLogin`, {
-        oAuthToken: oauth_token,
-        oAuthVerifier: oauth_verifier,
-      });
+export const twitterLogin = createAsyncThunk<void, TwitterLoginQueryString, { dispatch: Dispatch }>(
+  'twitterLogin',
+  async ({ oauth_token, oauth_verifier }, { dispatch }) => {
+    const response = await twitterApi.post<TwitterLoginResponse>(`/oauth/twitterLogin`, {
+      oAuthToken: oauth_token,
+      oAuthVerifier: oauth_verifier,
+    });
 
-      const {
-        oAuthAccessTokens: { oAuthAccessToken },
-        userName,
-      } = response.data;
+    const {
+      oAuthAccessTokens: { oAuthAccessToken },
+      userName,
+    } = response.data;
 
-      dispatch(setAuthData({ isAuth: true, userName }));
-      localStorage.setItem(OAUTH_ACCESS_TOKEN, oAuthAccessToken);
-    } catch (err) {
-      console.log(err);
-    }
-  };
+    localStorage.setItem(OAUTH_ACCESS_TOKEN, oAuthAccessToken);
 
-export const checkIsAuth = (oAuthAccessToken: string) => async (dispatch: dispatchType) => {
-  try {
-    const response = await userApi.post<checkAuthResponseType>('/checkAuth', { oAuthAccessToken });
+    dispatch(setAuthData({ isAuth: true, userName }));
+  }
+);
+
+export const checkIsAuth = createAsyncThunk<void, string, { dispatch: Dispatch }>(
+  'checkIsAuth',
+  async (oAuthAccessToken, { dispatch }) => {
+    const response = await userApi.post<CheckAuthResponse>('/checkAuth', { oAuthAccessToken });
     const { userName } = response.data;
 
     dispatch(setAuthData({ isAuth: true, userName }));
-  } catch (err) {
-    console.log(err);
   }
-};
+);
 
-export const twitterLogout = (oAuthAccessToken: string) => async (dispatch: dispatchType) => {
-  try {
+export const twitterLogout = createAsyncThunk<void, string, { dispatch: Dispatch }>(
+  'twitterLogout',
+  async (oAuthAccessToken, { dispatch }) => {
     await userApi.post('/logout', { oAuthAccessToken });
-    dispatch(setAuthData({ isAuth: false, userName: '' }));
     localStorage.removeItem(OAUTH_ACCESS_TOKEN);
-  } catch (err) {
-    console.log(err);
+
+    dispatch(setAuthData({ isAuth: false, userName: '' }));
   }
-};
+);
+
+export const setTwitterRequestTokenUrl = createAsyncThunk<string>(
+  'setTwitterRequestTokenUrl',
+  async () => {
+    const response = await twitterApi.post<OAuthRequestToken>(`/oauth/getRequestToken`);
+
+    return response.data.oAuthToken;
+  }
+);

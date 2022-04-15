@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux';
 import { LEAGUE_SELECTORS } from '../../../../../redux/leagueTable/constants';
 import { setSelectedLeagueSelector } from '../../../../../redux/leagueTable/reducer';
-import { leagueTableDataRequest } from '../../../../../redux/leagueTable/thunks';
+import { setLeagueTableData } from '../../../../../redux/leagueTable/thunks';
 
 import './leagueThead.scss';
 
@@ -15,7 +15,7 @@ const LeagueThead: React.FC = () => {
   } = useAppSelector((state) => state.leagueTable);
 
   useEffect(() => {
-    if (!leagueTableData[shortName]?.length) dispatch(leagueTableDataRequest(shortName));
+    if (!leagueTableData[shortName]?.length) dispatch(setLeagueTableData(shortName));
   }, [dispatch, shortName, leagueTableData]);
 
   return (

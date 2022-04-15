@@ -1,24 +1,20 @@
-import { shortLeagueNamesType } from './../leagueTable/types';
+import { setLeagueTeams } from './thunks';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { initialStateType, leagueTeamsDataType } from './types';
+import { InitialState, LeagueTeams } from './types';
 
-const initialState: initialStateType = {
+const initialState: InitialState = {
   leagueTeamsData: {},
 };
 
 export const leagueTeamsSlice = createSlice({
   name: 'leagueTeams',
   initialState,
-  reducers: {
-    setLeagueTeams: (
-      state,
-      action: PayloadAction<{ shortName: shortLeagueNamesType; teams: leagueTeamsDataType }>
-    ) => {
+  reducers: {},
+  extraReducers: {
+    [setLeagueTeams.fulfilled.type]: (state, action: PayloadAction<LeagueTeams>) => {
       state.leagueTeamsData[action.payload.shortName] = action.payload.teams;
     },
   },
 });
-
-export const { setLeagueTeams } = leagueTeamsSlice.actions;
 
 export default leagueTeamsSlice.reducer;

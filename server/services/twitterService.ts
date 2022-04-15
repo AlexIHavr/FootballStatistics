@@ -1,14 +1,21 @@
+import {
+  GetTweetsResponse,
+  TwitterTweetsApiResponse,
+  TwitterUsersApiResponse,
+} from './../types/twitterTypes';
+import fetch from 'node-fetch';
 import ApiError from '../errors/ApiError';
 import oAuthRepository from '../repositories/oAuthRepository';
 import {
-  twitterLoginRequestType,
-  oAuthRequestTokenType,
-  twitterLoginResponseType,
+  TwitterLoginRequest,
+  OAuthRequestToken,
+  TwitterLoginResponse,
 } from '../types/twitterTypes';
+import { TWITTER_TWEETS_API_URL, TWITTER_USERS_API_URL } from '../constants/twitterConstants';
 
 class TwitterService {
   async getRequestToken() {
-    const oAuthRequestTokens: oAuthRequestTokenType = await new Promise((resolve, reject) => {
+    const oAuthRequestTokens: OAuthRequestToken = await new Promise((resolve, reject) => {
       oAuthRepository.oAuth.getOAuthRequestToken((err, oAuthToken, oAuthTokenSecret) => {
         if (err) {
           reject(ApiError.oAuthError(err.statusCode, err.data));
@@ -25,8 +32,8 @@ class TwitterService {
     oAuthToken,
     oAuthTokenSecret,
     oAuthVerifier,
-  }: twitterLoginRequestType) {
-    const { oAuthAccessTokens, userName }: twitterLoginResponseType = await new Promise(
+  }: TwitterLoginRequest) {
+    const { oAuthAccessTokens, userName }: TwitterLoginResponse = await new Promise(
       (resolve, reject) => {
         oAuthRepository.oAuth.getOAuthAccessToken(
           oAuthToken,
@@ -47,6 +54,26 @@ class TwitterService {
     );
 
     return { oAuthAccessTokens, userName };
+  }
+
+  async getTweets(query: string) {
+    const tweetsResponse = await fetch(TWITTER_TWEETS_API_URL + query, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}` },
+    });
+
+    const tweets = (await tweetsResponse.json()) as TwitterTweetsApiResponse;
+
+    const authorIds = tweets.data.map(({ author_id }) => author_id).join(',');
+
+    const usersResponse = await fetch(TWITTER_USERS_API_URL + authorIds, {
+      method: 'GET',
+      headers: { Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}` },
+    });
+
+    const users = (await usersResponse.json()) as TwitterUsersApiResponse;
+
+    return tweets.data.map((tweet, index) => ({ ...tweet, username: users.data[index].username }));
   }
 }
 

@@ -1,6 +1,11 @@
 .wrapper .preloader-wrapper {
+  display: none;
   position: fixed;
   top: calc(100vh / 2 - 64px / 2);
   left: calc(100vw / 2 - 64px / 2);
   z-index: 100;
+
+  &.active {
+    display: block;
+  }
 }

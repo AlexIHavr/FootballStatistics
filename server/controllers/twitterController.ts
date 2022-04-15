@@ -1,13 +1,18 @@
-import { twitterLoginRequestType, twitterLoginResponseType } from './../types/twitterTypes';
+import {
+  GetTweetsRequest,
+  GetTweetsResponse,
+  TwitterLoginRequest,
+  TwitterLoginResponse,
+} from './../types/twitterTypes';
 import { Request, Response, NextFunction } from 'express';
 import twitterService from '../services/twitterService';
-import { oAuthRequestTokenType } from '../types/twitterTypes';
+import { OAuthRequestToken } from '../types/twitterTypes';
 import cookieService from '../services/cookieService';
 import { OAUTH_TOKEN_SECRET } from '../constants/twitterConstants';
 import userService from '../services/userService';
 
 class TwitterController {
-  async getRequestToken(req: Request, res: Response<oAuthRequestTokenType>, next: NextFunction) {
+  async getRequestToken(req: Request, res: Response<OAuthRequestToken>, next: NextFunction) {
     try {
       const oAuthRequestTokens = await twitterService.getRequestToken();
 
@@ -19,8 +24,8 @@ class TwitterController {
   }
 
   async twitterLogin(
-    req: Request<{}, {}, twitterLoginRequestType>,
-    res: Response<twitterLoginResponseType>,
+    req: Request<{}, {}, TwitterLoginRequest>,
+    res: Response<TwitterLoginResponse>,
     next: NextFunction
   ) {
     try {
@@ -39,6 +44,19 @@ class TwitterController {
 
       cookieService.deleteCookie(res, OAUTH_TOKEN_SECRET);
       res.json({ oAuthAccessTokens, userName });
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  async getTweets(
+    req: Request<{}, {}, GetTweetsRequest>,
+    res: Response<GetTweetsResponse>,
+    next: NextFunction
+  ) {
+    try {
+      const data = await twitterService.getTweets(req.body.query);
+      res.json(data);
     } catch (err) {
       next(err);
     }

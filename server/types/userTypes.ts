@@ -1,15 +1,15 @@
 import { Document } from 'mongoose';
 
-export type userSchemaType = {
+export type UserSchema = {
   userName: string;
   oAuthAccessToken: string;
   oAuthAccessTokenSecret: string;
 } & Document;
 
-export type checkAuthRequestType = {
+export type CheckAuthRequest = {
   oAuthAccessToken: string;
 };
 
-export type checkAuthResponseType = {
+export type CheckAuthResponse = {
   userName: string;
 };

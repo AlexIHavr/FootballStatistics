@@ -1,14 +1,15 @@
-import { leagueSelectorType } from './types';
+/* eslint-disable no-unused-vars */
+import { LeagueSelector } from './types';
 
 export enum shortLeagueNames {
-  'PL' = 'PL',
-  'BL1' = 'BL1',
-  'PD' = 'PD',
-  'SA' = 'SA',
-  'FL1' = 'FL1',
+  PL = 'PL',
+  BL1 = 'BL1',
+  PD = 'PD',
+  SA = 'SA',
+  FL1 = 'FL1',
 }
 
-export const LEAGUE_SELECTORS: leagueSelectorType[] = [
+export const LEAGUE_SELECTORS: LeagueSelector[] = [
   {
     name: 'English Premier League',
     shortName: shortLeagueNames.PL,
