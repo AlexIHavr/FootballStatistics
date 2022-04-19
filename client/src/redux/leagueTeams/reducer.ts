@@ -1,4 +1,4 @@
-import { setLeagueTeams } from './thunks';
+import { setLeagueTeamsData } from './thunks';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { InitialState, LeagueTeams } from './types';
 
@@ -11,7 +11,7 @@ export const leagueTeamsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: {
-    [setLeagueTeams.fulfilled.type]: (state, action: PayloadAction<LeagueTeams>) => {
+    [setLeagueTeamsData.fulfilled.type]: (state, action: PayloadAction<LeagueTeams>) => {
       state.leagueTeamsData[action.payload.shortName] = action.payload.teams;
     },
   },

@@ -3,9 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux';
 import { useEffect, useState } from 'react';
 import TeamPagination from '../../../../common/teamPagination/TeamPagination';
 import Player from './player/Player';
-import { paginationDisplayCount } from '../../../../../constants/app';
+import { PLAYERS_DISPLAY_COUNT } from '../../../../../constants/app';
 import { setTeamTweets } from '../../../../../redux/leagueTeam/thunks';
 import { setTweetsQuery } from '../../../../../redux/leagueTeam/reducer';
+import { filterByCurrentPage } from '../../../../../helpers/app';
 
 const Players: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -21,45 +22,45 @@ const Players: React.FC = () => {
   }, [dispatch, selectedTeam, tweetsQuery]);
 
   return (
-    <Grid container spacing={2} className="leagueTeamCards">
+    <Grid container spacing={2}>
       <Grid item xs={6}>
-        <div className="card">Players</div>
-      </Grid>
-      <Grid item xs={6}>
-        <div className="card">{`Tweets for tag #${selectedTeam?.shortName}`}</div>
-      </Grid>
-      <Grid item xs={6} paddingTop={0}>
-        <Grid container direction="column" className="playersList" spacing={2}>
+        <Grid container direction="column" spacing={2}>
+          <Grid item xs={6}>
+            <div className="card">Players</div>
+          </Grid>
           <Grid item>
             <TeamPagination
               currentPage={currentPage}
               setCurrentPage={setCurrentPage}
               itemsCount={selectedTeam?.squad.length || 0}
+              displayCount={PLAYERS_DISPLAY_COUNT}
             />
           </Grid>
 
           {selectedTeam &&
-            selectedTeam.squad
-              .filter(
-                (_, index) =>
-                  index >= (currentPage - 1) * paginationDisplayCount &&
-                  index < currentPage * paginationDisplayCount
-              )
-              .map(({ id, name, position, dateOfBirth, shirtNumber }) => (
-                <Grid key={id} item>
-                  <Player
-                    name={name}
-                    position={position}
-                    dateOfBirth={dateOfBirth}
-                    shirtNumber={shirtNumber}
-                  />
-                </Grid>
-              ))}
+            filterByCurrentPage({
+              items: selectedTeam.squad,
+              currentPage,
+              displayCount: PLAYERS_DISPLAY_COUNT,
+            }).map(({ id, name, position, dateOfBirth, shirtNumber }) => (
+              <Grid key={id} item>
+                <Player
+                  name={name}
+                  position={position}
+                  dateOfBirth={dateOfBirth}
+                  shirtNumber={shirtNumber}
+                />
+              </Grid>
+            ))}
         </Grid>
       </Grid>
 
-      <Grid item xs={6} paddingTop={0}>
-        <Grid container direction="column" className="tweetsList" spacing={2}>
+      <Grid item xs={6}>
+        <Grid container direction="column" spacing={2}>
+          <Grid item xs={6}>
+            <div className="card">{`Tweets for tag #${selectedTeam?.shortName}`}</div>
+          </Grid>
+
           {selectedTeam &&
             (teamTweets.length ? (
               teamTweets.map(({ id, text, created_at, username }) => (

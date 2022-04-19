@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { LEAGUE_SELECTORS } from '../../../../redux/leagueTable/constants';
 import { setSelectedLeagueSelector } from '../../../../redux/leagueTable/reducer';
 import { ShortLeagueNames } from '../../../../redux/leagueTable/types';
-import { setLeagueTeams } from '../../../../redux/leagueTeams/thunks';
+import { setLeagueTeamsData } from '../../../../redux/leagueTeams/thunks';
 import TeamItem from '../../../common/teamItem/TeamItem';
 import './leagueTeams.scss';
 
@@ -29,7 +29,7 @@ const LeagueTeams: React.FC = () => {
 
   useEffect(() => {
     if (!leagueTeamsData[selectedLeagueSelector.shortName]?.length)
-      dispatch(setLeagueTeams(selectedLeagueSelector.shortName));
+      dispatch(setLeagueTeamsData(selectedLeagueSelector.shortName));
   }, [dispatch, leagueTeamsData, selectedLeagueSelector]);
 
   return (

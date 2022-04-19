@@ -1,6 +1,5 @@
 import { Button, ButtonGroup, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useCallback, useMemo } from 'react';
-import { paginationDisplayCount } from '../../../constants/app';
 import { TeamPaginationProps } from '../../../types/props';
 
 import './teamPagination.scss';
@@ -9,8 +8,9 @@ const TeamPagination: React.FC<TeamPaginationProps> = ({
   currentPage,
   setCurrentPage,
   itemsCount,
+  displayCount,
 }) => {
-  const pageCount = useMemo(() => Math.ceil(itemsCount / paginationDisplayCount), [itemsCount]);
+  const pageCount = useMemo(() => Math.ceil(itemsCount / displayCount), [itemsCount, displayCount]);
 
   const setCurrentPageOnChange = useCallback(
     (e: SelectChangeEvent<number>) => {

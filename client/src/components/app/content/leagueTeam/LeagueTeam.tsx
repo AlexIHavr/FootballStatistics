@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { PARAMS } from '../../../../constants/app';
+import { params } from '../../../../constants/app';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import TeamItem from '../../../common/teamItem/TeamItem';
 import { controls } from '../../../../redux/leagueTeam/constants';
@@ -16,7 +16,7 @@ const LeagueTeam: React.FC = () => {
   const dispatch = useAppDispatch();
   const { selectedTeam, selectedControl } = useAppSelector((state) => state.leagueTeam);
 
-  const { [PARAMS.teamId]: teamId } = useParams();
+  const { [params.teamId]: teamId } = useParams();
 
   useEffect(() => {
     if (teamId && selectedTeam?.id !== Number(teamId)) {

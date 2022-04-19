@@ -7,7 +7,7 @@ export type LeagueSelector = {
   shortName: ShortLeagueNames;
 };
 
-export type LeagueTableResponse = {
+export type LeagueTable = {
   position: number;
   team: {
     id: number;
@@ -29,11 +29,11 @@ export type InitialState = {
   selectedLeagueSelector: LeagueSelector;
   leagueTableData: Partial<{
     -readonly // eslint-disable-next-line no-unused-vars
-    [index in ShortLeagueNames]: LeagueTableResponse;
+    [index in ShortLeagueNames]: LeagueTable;
   }>;
 };
 
 export type LeagueTableData = {
   shortName: ShortLeagueNames;
-  table: LeagueTableResponse;
+  table: LeagueTable;
 };

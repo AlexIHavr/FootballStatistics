@@ -1,6 +1,6 @@
 import { Avatar, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { URLS } from '../../../constants/app';
+import { urls } from '../../../constants/app';
 import { TeamItemProps } from '../../../types/props';
 
 import './teamItem.scss';
@@ -12,7 +12,7 @@ const TeamItem: React.FC<TeamItemProps> = ({ id, name, shortName, crestUrl, tabC
         <Avatar className="teamItemAvatar" src={crestUrl} />
       </ListItemAvatar>
       <ListItemText
-        primary={<Link to={`${URLS.teams}/${id}`}>{name}</Link>}
+        primary={<Link to={`${urls.teams}/${id}`}>{name}</Link>}
         secondary={
           <>
             <span>shortName: {shortName}</span>
