@@ -1,52 +1,56 @@
-import { useEffect, useMemo } from 'react';
+import { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
 import { params } from '../../../../../../constants/app';
-import { useAppDispatch } from '../../../../../../hooks/redux';
-import { datesFormNames } from '../../../../../../redux/leagueTeam/constants';
+import { useAppDispatch, useAppSelector } from '../../../../../../hooks/redux';
+import { datesFormNames, DEFAULT_VALUES_DATES } from '../../../../../../redux/leagueTeam/constants';
+import { setDatesFormFields } from '../../../../../../redux/leagueTeam/reducer';
 import { setTeamFixtures } from '../../../../../../redux/leagueTeam/thunks';
-import { DatesFormNames } from '../../../../../../redux/leagueTeam/types';
+import { DatesFormFields, DatesFormNames } from '../../../../../../redux/leagueTeam/types';
 import DateField from './dateField/DateField';
 
 import './datesForm.scss';
 
 const DatesForm: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { datesFormFields } = useAppSelector((state) => state.leagueTeam);
   const { [params.teamId]: teamId } = useParams();
-
-  const defaultValues = useMemo(
-    () => ({
-      [datesFormNames.dateFrom]: new Date().toLocaleDateString('sv-SE'),
-      [datesFormNames.dateTo]: new Date(
-        new Date().getTime() + 60 * 60 * 24 * 1000 * 14
-      ).toLocaleDateString('sv-SE'),
-    }),
-    []
-  );
 
   const {
     control,
     formState: { errors },
     handleSubmit,
-  } = useForm<DatesFormNames>({ mode: 'onBlur', defaultValues });
+  } = useForm<DatesFormFields>({
+    mode: 'onBlur',
+    defaultValues: datesFormFields || DEFAULT_VALUES_DATES,
+  });
 
-  const onBlur: SubmitHandler<DatesFormNames> = ({ dateFrom, dateTo }) => {
-    if (teamId && !Object.keys(errors).length)
-      dispatch(setTeamFixtures({ teamId, dateFrom, dateTo }));
-  };
+  const onBlur: SubmitHandler<DatesFormFields> = useCallback(
+    (data) => {
+      if (
+        teamId &&
+        !Object.keys(errors).length &&
+        ((Object.keys(data) as DatesFormNames[]).some(
+          (key) => datesFormFields && datesFormFields[key] !== data[key]
+        ) ||
+          !datesFormFields)
+      ) {
+        dispatch(setTeamFixtures({ teamId, dateFrom: data.dateFrom, dateTo: data.dateTo }));
+        dispatch(setDatesFormFields(data));
+      }
+    },
+    [dispatch, teamId, errors, datesFormFields]
+  );
 
   useEffect(() => {
-    if (teamId)
-      dispatch(
-        setTeamFixtures({ teamId, dateFrom: defaultValues.dateFrom, dateTo: defaultValues.dateTo })
-      );
-  }, [dispatch, teamId, defaultValues]);
+    if (!datesFormFields) onBlur(DEFAULT_VALUES_DATES);
+  }, [onBlur, datesFormFields]);
 
   return (
     <div className="teamItem">
       <form onBlur={handleSubmit(onBlur)} className="datesForm">
-        <DateField fieldValue={datesFormNames.dateFrom} control={control} errors={errors} />
-        <DateField fieldValue={datesFormNames.dateTo} control={control} errors={errors} />
+        <DateField fieldName={datesFormNames.dateFrom} control={control} errors={errors} />
+        <DateField fieldName={datesFormNames.dateTo} control={control} errors={errors} />
       </form>
     </div>
   );

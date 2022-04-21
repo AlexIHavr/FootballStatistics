@@ -42,42 +42,44 @@ const Fixtures: React.FC = () => {
             <DatesForm />
           </Grid>
 
-          {teamFixturesError && (
+          {teamFixturesError ? (
             <Grid item>
               <div className="teamItem error">{teamFixturesError}</div>
             </Grid>
+          ) : (
+            <>
+              <Grid item>
+                {teamFixtures.length ? (
+                  <TeamPagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    itemsCount={teamFixtures.length}
+                    displayCount={FIXTURES_DISPLAY_COUNT}
+                  />
+                ) : (
+                  <div className="card">No results</div>
+                )}
+              </Grid>
+
+              {filterByCurrentPage({
+                items: teamFixtures,
+                currentPage,
+                displayCount: FIXTURES_DISPLAY_COUNT,
+              }).map((teamFixture) => (
+                <Grid
+                  key={teamFixture.id}
+                  item
+                  className="fixtureItem"
+                  onClick={() => setSelectedTeamFixtureOnClick(teamFixture)}
+                >
+                  <Fixture
+                    teamFixture={teamFixture}
+                    active={selectedTeamFixture?.id === teamFixture.id}
+                  />
+                </Grid>
+              ))}
+            </>
           )}
-
-          <Grid item>
-            {teamFixtures.length ? (
-              <TeamPagination
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                itemsCount={teamFixtures.length}
-                displayCount={FIXTURES_DISPLAY_COUNT}
-              />
-            ) : (
-              <div className="card">No results</div>
-            )}
-          </Grid>
-
-          {filterByCurrentPage({
-            items: teamFixtures,
-            currentPage,
-            displayCount: FIXTURES_DISPLAY_COUNT,
-          }).map((teamFixture) => (
-            <Grid
-              key={teamFixture.id}
-              item
-              className="fixtureItem"
-              onClick={() => setSelectedTeamFixtureOnClick(teamFixture)}
-            >
-              <Fixture
-                teamFixture={teamFixture}
-                active={selectedTeamFixture?.id === teamFixture.id}
-              />
-            </Grid>
-          ))}
         </Grid>
       </Grid>
 

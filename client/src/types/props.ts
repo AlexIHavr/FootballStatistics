@@ -1,6 +1,5 @@
-import { DatesFormNames, TeamFixture } from './../redux/leagueTeam/types';
+import { DatesFormFields, DatesFormNames, TeamFixture } from './../redux/leagueTeam/types';
 import { Control, FieldError } from 'react-hook-form';
-import { datesFormNames } from '../redux/leagueTeam/constants';
 
 export type TeamItemProps = {
   id: number;
@@ -25,11 +24,11 @@ export type TeamPaginationProps = {
 };
 
 export type DateFieldProps = {
-  fieldValue: keyof typeof datesFormNames;
-  control: Control<DatesFormNames>;
+  fieldName: DatesFormNames;
+  control: Control<DatesFormFields>;
   errors: Partial<{
     // eslint-disable-next-line no-unused-vars
-    [K in keyof DatesFormNames]: FieldError;
+    [K in keyof DatesFormFields]: FieldError;
   }>;
 };
 

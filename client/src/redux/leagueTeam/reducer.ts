@@ -15,6 +15,7 @@ import {
   TeamFixtures,
   TeamFixture,
   FixtureDetails,
+  DatesFormFields,
 } from './types';
 
 const initialState: InitialState = {
@@ -27,6 +28,7 @@ const initialState: InitialState = {
   fixtureDetails: null,
   teamFixturesError: '',
   tweetsQuery: '',
+  datesFormFields: null,
 };
 
 export const leagueTeamSlice = createSlice({
@@ -41,6 +43,9 @@ export const leagueTeamSlice = createSlice({
     },
     setSelectedTeamFixture: (state, action: PayloadAction<TeamFixture>) => {
       state.selectedTeamFixture = action.payload;
+    },
+    setDatesFormFields: (state, action: PayloadAction<DatesFormFields>) => {
+      state.datesFormFields = action.payload;
     },
   },
   extraReducers: {
@@ -70,7 +75,7 @@ export const leagueTeamSlice = createSlice({
   },
 });
 
-export const { setSelectedControl, setTweetsQuery, setSelectedTeamFixture } =
+export const { setSelectedControl, setTweetsQuery, setSelectedTeamFixture, setDatesFormFields } =
   leagueTeamSlice.actions;
 
 export default leagueTeamSlice.reducer;

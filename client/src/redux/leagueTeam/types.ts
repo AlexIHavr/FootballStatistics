@@ -50,9 +50,11 @@ export type TeamTweets = {
   author_id: string;
 }[];
 
-export type DatesFormNames = {
-  [datesFormNames.dateFrom]: string;
-  [datesFormNames.dateTo]: string;
+export type DatesFormNames = keyof typeof datesFormNames;
+
+export type DatesFormFields = {
+  // eslint-disable-next-line no-unused-vars
+  [K in DatesFormNames]: string;
 };
 
 export type TeamFixture = {
@@ -120,6 +122,7 @@ export type InitialState = {
   selectedControl: Controls;
   teamTweets: TeamTweets;
   teamFixtures: TeamFixtures;
+  datesFormFields: DatesFormFields | null;
   fixtureDetails: FixtureDetails | null;
   selectedTeamFixtureLastGames: TeamFixtures;
   selectedTeamFixture: TeamFixture | null;
