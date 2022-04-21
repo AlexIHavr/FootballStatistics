@@ -1,5 +1,6 @@
 import { ShortLeagueNames } from './../leagueTable/types';
-export type LeagueTeamsData = {
+
+export type LeagueTeamData = {
   id: number;
   area: {
     id: number;
@@ -17,13 +18,16 @@ export type LeagueTeamsData = {
   clubColors: string;
   venue: string;
   lastUpdated: string;
-}[];
+};
+
+export type LeagueTeamsData = LeagueTeamData[];
 
 export type InitialState = {
   leagueTeamsData: Partial<{
     -readonly // eslint-disable-next-line no-unused-vars
     [index in ShortLeagueNames]: LeagueTeamsData;
   }>;
+  favoritesTeams: number[];
 };
 
 export type LeagueTeams = {

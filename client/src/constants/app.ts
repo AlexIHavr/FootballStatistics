@@ -2,6 +2,7 @@
 export enum urls {
   table = '/',
   teams = '/teams',
+  favorites = '/favorites',
 }
 
 export enum params {

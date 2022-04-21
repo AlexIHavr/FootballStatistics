@@ -83,8 +83,8 @@ const Fixtures: React.FC = () => {
         </Grid>
       </Grid>
 
-      <Grid item xs={6}>
-        {selectedTeamFixture && (
+      {selectedTeamFixture && !teamFixturesError && (
+        <Grid item xs={6}>
           <Grid container direction="column" spacing={2}>
             <Grid item marginTop="0.5rem">
               <Fixture teamFixture={selectedTeamFixture} showFixtureDetails />
@@ -95,8 +95,8 @@ const Fixtures: React.FC = () => {
               </Grid>
             ))}
           </Grid>
-        )}
-      </Grid>
+        </Grid>
+      )}
     </Grid>
   );
 };
