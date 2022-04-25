@@ -27,10 +27,12 @@ export type InitialState = {
     -readonly // eslint-disable-next-line no-unused-vars
     [index in ShortLeagueNames]: LeagueTeamsData;
   }>;
-  favoritesTeams: number[];
+  favoriteTeams: number[];
 };
 
 export type LeagueTeams = {
   shortName: ShortLeagueNames;
   teams: LeagueTeamsData;
 };
+
+export type GetFavoriteTeamsResponse = number[];

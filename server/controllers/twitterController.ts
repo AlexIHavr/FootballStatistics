@@ -8,7 +8,7 @@ import { Request, Response, NextFunction } from 'express';
 import twitterService from '../services/twitterService';
 import { OAuthRequestToken } from '../types/twitterTypes';
 import cookieService from '../services/cookieService';
-import { OAUTH_TOKEN_SECRET } from '../constants/twitterConstants';
+import { OAUTH_ACCESS_TOKEN, OAUTH_TOKEN_SECRET } from '../constants/twitterConstants';
 import userService from '../services/userService';
 
 class TwitterController {
@@ -43,6 +43,7 @@ class TwitterController {
       }
 
       cookieService.deleteCookie(res, OAUTH_TOKEN_SECRET);
+      cookieService.setCookie(res, OAUTH_ACCESS_TOKEN, oAuthAccessTokens.oAuthAccessToken);
       res.json({ oAuthAccessTokens, userName });
     } catch (err) {
       next(err);

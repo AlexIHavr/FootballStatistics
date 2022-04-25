@@ -3,18 +3,28 @@ import { useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { urls } from '../../../constants/app';
 import { useAppDispatch, useAppSelector } from '../../../hooks/redux';
-import { toggleFavoritesTeam } from '../../../redux/leagueTeams/reducer';
+import { addFavoriteTeam, removeFavoriteTeam } from '../../../redux/leagueTeams/thunks';
 import { TeamItemProps } from '../../../types/props';
 
 import './teamItem.scss';
 
 const TeamItem: React.FC<TeamItemProps> = ({ id, name, shortName, crestUrl, tabControl }) => {
   const dispatch = useAppDispatch();
-  const { favoritesTeams } = useAppSelector((state) => state.leagueTeams);
+  const {
+    leagueTeams: { favoriteTeams },
+    twitterAuth: { isAuth },
+  } = useAppSelector((state) => state);
 
-  const toggleFavoritesTeamOnClick = useCallback(
+  const addFavoriteTeamOnClick = useCallback(
     (id: number) => {
-      dispatch(toggleFavoritesTeam(id));
+      dispatch(addFavoriteTeam(id));
+    },
+    [dispatch]
+  );
+
+  const removeFavoriteTeamOnClick = useCallback(
+    (id: number) => {
+      dispatch(removeFavoriteTeam(id));
     },
     [dispatch]
   );
@@ -31,14 +41,22 @@ const TeamItem: React.FC<TeamItemProps> = ({ id, name, shortName, crestUrl, tabC
             <span>shortName: {shortName}</span>
             <br />
 
-            <a
-              className="addToFavorites waves-effect btn"
-              onClick={() => toggleFavoritesTeamOnClick(id)}
-            >
-              {!favoritesTeams.find((teamId) => teamId === id)
-                ? 'Add to favorites'
-                : ' Remove from favorites'}
-            </a>
+            {isAuth &&
+              (!favoriteTeams.find((teamId) => teamId === id) ? (
+                <a
+                  className="toggleToFavorites waves-effect btn"
+                  onClick={() => addFavoriteTeamOnClick(id)}
+                >
+                  Add to favorites
+                </a>
+              ) : (
+                <a
+                  className="toggleToFavorites waves-effect btn"
+                  onClick={() => removeFavoriteTeamOnClick(id)}
+                >
+                  Remove from favorites
+                </a>
+              ))}
           </>
         }
       />

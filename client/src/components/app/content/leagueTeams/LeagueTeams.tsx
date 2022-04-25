@@ -1,10 +1,9 @@
 import { Grid, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { LEAGUE_SELECTORS } from '../../../../redux/leagueTable/constants';
 import { setSelectedLeagueSelector } from '../../../../redux/leagueTable/reducer';
 import { ShortLeagueNames } from '../../../../redux/leagueTable/types';
-import { setLeagueTeamsData } from '../../../../redux/leagueTeams/thunks';
 import TeamItem from '../../../common/teamItem/TeamItem';
 import './leagueTeams.scss';
 
@@ -26,11 +25,6 @@ const LeagueTeams: React.FC = () => {
     },
     [dispatch, selectedLeagueSelector]
   );
-
-  useEffect(() => {
-    if (!leagueTeamsData[selectedLeagueSelector.shortName]?.length)
-      dispatch(setLeagueTeamsData(selectedLeagueSelector.shortName));
-  }, [dispatch, leagueTeamsData, selectedLeagueSelector]);
 
   return (
     <div className="leagueTeamsContent">

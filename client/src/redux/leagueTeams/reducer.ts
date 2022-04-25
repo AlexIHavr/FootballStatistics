@@ -1,29 +1,35 @@
-import { setLeagueTeamsData } from './thunks';
+import {
+  addFavoriteTeam,
+  getFavoriteTeams,
+  removeFavoriteTeam,
+  setLeagueTeamsData,
+} from './thunks';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { InitialState, LeagueTeams } from './types';
+import { GetFavoriteTeamsResponse, InitialState, LeagueTeams } from './types';
 
 const initialState: InitialState = {
   leagueTeamsData: {},
-  favoritesTeams: [],
+  favoriteTeams: [],
 };
 
 export const leagueTeamsSlice = createSlice({
   name: 'leagueTeams',
   initialState,
-  reducers: {
-    toggleFavoritesTeam: (state, action: PayloadAction<number>) => {
-      state.favoritesTeams.find((id) => id === action.payload)
-        ? (state.favoritesTeams = state.favoritesTeams.filter((id) => id !== action.payload))
-        : state.favoritesTeams.push(action.payload);
-    },
-  },
+  reducers: {},
   extraReducers: {
     [setLeagueTeamsData.fulfilled.type]: (state, action: PayloadAction<LeagueTeams>) => {
       state.leagueTeamsData[action.payload.shortName] = action.payload.teams;
     },
+    [getFavoriteTeams.fulfilled.type]: (state, action: PayloadAction<GetFavoriteTeamsResponse>) => {
+      state.favoriteTeams = action.payload;
+    },
+    [addFavoriteTeam.fulfilled.type]: (state, action: PayloadAction<number>) => {
+      state.favoriteTeams.push(action.payload);
+    },
+    [removeFavoriteTeam.fulfilled.type]: (state, action: PayloadAction<number>) => {
+      state.favoriteTeams = state.favoriteTeams.filter((id) => id !== action.payload);
+    },
   },
 });
-
-export const { toggleFavoritesTeam } = leagueTeamsSlice.actions;
 
 export default leagueTeamsSlice.reducer;

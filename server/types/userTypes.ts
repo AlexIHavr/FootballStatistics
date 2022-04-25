@@ -4,6 +4,9 @@ export type UserSchema = {
   userName: string;
   oAuthAccessToken: string;
   oAuthAccessTokenSecret: string;
+  email: string;
+  favoriteTeams: number[];
+  birthDay: string;
 } & Document;
 
 export type CheckAuthRequest = {
@@ -13,3 +16,9 @@ export type CheckAuthRequest = {
 export type CheckAuthResponse = {
   userName: string;
 };
+
+export type FavoriteTeamRequest = {
+  id: number;
+};
+
+export type GetFavoriteTeamsResponse = number[];
