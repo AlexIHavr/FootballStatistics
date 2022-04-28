@@ -1,8 +1,4 @@
-import {
-  GetTweetsResponse,
-  TwitterTweetsApiResponse,
-  TwitterUsersApiResponse,
-} from './../types/twitterTypes';
+import { TwitterTweetsApiResponse, TwitterUsersApiResponse } from './../types/twitterTypes';
 import fetch from 'node-fetch';
 import ApiError from '../errors/ApiError';
 import oAuthRepository from '../repositories/oAuthRepository';

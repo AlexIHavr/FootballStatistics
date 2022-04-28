@@ -3,8 +3,6 @@ import ApiError from '../errors/ApiError';
 import userModel from '../models/userModel';
 import { TwitterLoginResponse } from '../types/twitterTypes';
 import { FilterQuery } from 'mongoose';
-import cookieService from './cookieService';
-import { OAUTH_ACCESS_TOKEN } from '../constants/twitterConstants';
 
 class UserService {
   async create({

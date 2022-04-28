@@ -12,7 +12,7 @@ import ApiError from '../errors/ApiError';
 
 class UserController {
   async checkAuth(
-    req: Request<{}, {}, CheckAuthRequest>,
+    req: Request<any, any, CheckAuthRequest>,
     res: Response<CheckAuthResponse>,
     next: NextFunction
   ) {
@@ -29,7 +29,7 @@ class UserController {
     }
   }
 
-  async logout(req: Request<{}, {}, CheckAuthRequest>, res: Response, next: NextFunction) {
+  async logout(req: Request<any, any, CheckAuthRequest>, res: Response, next: NextFunction) {
     try {
       const user = await userService.logout(req.body.oAuthAccessToken);
       cookieService.deleteCookie(res, OAUTH_ACCESS_TOKEN);
@@ -56,7 +56,7 @@ class UserController {
   }
 
   async addFavoriteTeam(
-    req: Request<{}, {}, FavoriteTeamRequest>,
+    req: Request<any, any, FavoriteTeamRequest>,
     res: Response,
     next: NextFunction
   ) {
@@ -73,7 +73,7 @@ class UserController {
   }
 
   async deleteFavoriteTeam(
-    req: Request<{}, {}, FavoriteTeamRequest>,
+    req: Request<any, any, FavoriteTeamRequest>,
     res: Response,
     next: NextFunction
   ) {

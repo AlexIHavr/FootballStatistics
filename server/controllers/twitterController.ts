@@ -24,7 +24,7 @@ class TwitterController {
   }
 
   async twitterLogin(
-    req: Request<{}, {}, TwitterLoginRequest>,
+    req: Request<any, any, TwitterLoginRequest>,
     res: Response<TwitterLoginResponse>,
     next: NextFunction
   ) {
@@ -51,7 +51,7 @@ class TwitterController {
   }
 
   async getTweets(
-    req: Request<{}, {}, GetTweetsRequest>,
+    req: Request<any, any, GetTweetsRequest>,
     res: Response<GetTweetsResponse>,
     next: NextFunction
   ) {
