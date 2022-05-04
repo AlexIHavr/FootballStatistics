@@ -1,5 +1,6 @@
 import { useCallback, useEffect } from 'react';
 import queryString from 'query-string';
+
 import './twitterAuth.scss';
 import {
   checkIsAuth,
@@ -12,7 +13,7 @@ import { OAUTH_ACCESS_TOKEN } from '../../../../redux/twitterAuth/constants';
 
 const TwitterAuth: React.FC = () => {
   const { isAuth, userName, twitterRequestTokenUrl, isLoading } = useAppSelector(
-    (store) => store.twitterAuth
+    (store) => store.twitterAuth,
   );
   const dispatch = useAppDispatch();
 
@@ -31,7 +32,7 @@ const TwitterAuth: React.FC = () => {
 
     if (oauth_token && oauth_verifier) {
       await dispatch(
-        twitterLogin({ oauth_token: String(oauth_token), oauth_verifier: String(oauth_verifier) })
+        twitterLogin({ oauth_token: String(oauth_token), oauth_verifier: String(oauth_verifier) }),
       );
 
       window.history.pushState({}, '', '/');

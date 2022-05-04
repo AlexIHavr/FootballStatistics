@@ -1,6 +1,8 @@
-import { InitialState, LeagueSelector, LeagueTableData } from './types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+import { InitialState, LeagueSelector, LeagueTableData } from './types';
 import { LEAGUE_SELECTORS } from './constants';
+import { setLeagueTableData } from './thunks';
 
 const initialState: InitialState = {
   selectedLeagueSelector: LEAGUE_SELECTORS[0],
@@ -14,19 +16,14 @@ export const leagueTableSlice = createSlice({
     setSelectedLeagueSelector: (state, action: PayloadAction<LeagueSelector>) => {
       state.selectedLeagueSelector = action.payload;
     },
-    setLeagueTableDataFulfilled: (state, action: PayloadAction<LeagueTableData>) => {
+  },
+  extraReducers: {
+    [setLeagueTableData.fulfilled.type]: (state, action: PayloadAction<LeagueTableData>) => {
       state.leagueTableData[action.payload.shortName] = action.payload.table;
     },
   },
-
-  //BUG!!!
-  // extraReducers: {
-  //   [setLeagueTableData.fulfilled.type]: (state, action: PayloadAction<LeagueTableData>) => {
-  //     state.leagueTableData[action.payload.shortName] = action.payload.table;
-  //   },
-  // },
 });
 
-export const { setSelectedLeagueSelector, setLeagueTableDataFulfilled } = leagueTableSlice.actions;
+export const { setSelectedLeagueSelector } = leagueTableSlice.actions;
 
 export default leagueTableSlice.reducer;

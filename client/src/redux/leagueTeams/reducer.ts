@@ -1,10 +1,11 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import {
   addFavoriteTeam,
   getFavoriteTeams,
   removeFavoriteTeam,
   setLeagueTeamsData,
 } from './thunks';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { GetFavoriteTeamsResponse, InitialState, LeagueTeams } from './types';
 
 const initialState: InitialState = {

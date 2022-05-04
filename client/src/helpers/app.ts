@@ -6,6 +6,6 @@ export const filterByCurrentPage = <T>({
   displayCount,
 }: FilterByCurrentPageParams<T>): T[] => {
   return items.filter(
-    (_, index) => index >= (currentPage - 1) * displayCount && index < currentPage * displayCount
+    (_, index) => index >= (currentPage - 1) * displayCount && index < currentPage * displayCount,
   );
 };

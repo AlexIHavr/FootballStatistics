@@ -1,12 +1,19 @@
-import { Avatar, ListItem, ListItemAvatar, ListItemText } from '@mui/material';
-import { PlayerProps } from '../../../../../../types/props';
+import { Avatar, Card, ListItemAvatar, ListItemText } from '@mui/material';
+
 import playerShirtSrc from '../../../../../../assets/images/playerShirt.png';
 
 import './player.scss';
 
+type PlayerProps = {
+  name: string;
+  position: string;
+  dateOfBirth: string;
+  shirtNumber: number | null;
+};
+
 const Player: React.FC<PlayerProps> = ({ name, position, dateOfBirth, shirtNumber }) => {
   return (
-    <ListItem className="teamItem">
+    <Card className="teamItem">
       <ListItemText
         primary={<h6>{name}</h6>}
         secondary={
@@ -21,7 +28,7 @@ const Player: React.FC<PlayerProps> = ({ name, position, dateOfBirth, shirtNumbe
         <h4 className="playerNumber">{shirtNumber}</h4>
         <Avatar className="teamItemAvatar" src={playerShirtSrc} />
       </ListItemAvatar>
-    </ListItem>
+    </Card>
   );
 };
 

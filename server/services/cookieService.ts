@@ -1,5 +1,6 @@
 import { Response, Request } from 'express';
-import config from '../config';
+import { TIME_OAUTH } from '../constants/twitterConstants';
+
 class CookieService {
   getCookie(req: Request, name: string): string {
     return req.cookies[name];
@@ -7,7 +8,7 @@ class CookieService {
 
   setCookie(res: Response, name: string, value: string) {
     res.cookie(name, value, {
-      maxAge: config.TIME_OAUTH,
+      maxAge: TIME_OAUTH,
       httpOnly: true,
     });
   }

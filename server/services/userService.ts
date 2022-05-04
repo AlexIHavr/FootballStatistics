@@ -24,16 +24,6 @@ class UserService {
 
     if (!user) {
       throw ApiError.Unauthorized('Invalid oAuth access token.');
-    } else {
-      return user;
-    }
-  }
-
-  async logout(oAuthAccessToken: string) {
-    const user = await this.findOne({ oAuthAccessToken });
-
-    if (!user) {
-      throw ApiError.Unauthorized('Invalid oAuth access token.');
     }
 
     return user;

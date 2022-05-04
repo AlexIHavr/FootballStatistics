@@ -19,15 +19,23 @@
   },
   "plugins": ["react", "@typescript-eslint"],
   "rules": {
-    "semi": 0,
-    "quotes": 0,
-    "camelcase": 0,
-    "curly": 0,
-    "react/prop-types": 0,
-    "spaced-comment": 0,
-    "comma-dangle": 0,
-    "no-undef": 0,
-    "no-unused-vars": 1,
-    "multiline-ternary": 0
+    "semi": "off",
+    "quotes": "off",
+    "camelcase": "off",
+    "curly": "off",
+    "react/prop-types": "off",
+    "spaced-comment": "off",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "newlines-between": "always"
+      }
+    ],
+    "no-undef": "off",
+    "no-unused-vars": "warn",
+    "multiline-ternary": "off",
+    "no-console": "warn",
+    "comma-dangle": ["error", "always-multiline"]
   }
 }

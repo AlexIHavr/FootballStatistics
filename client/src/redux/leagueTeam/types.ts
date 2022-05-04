@@ -1,6 +1,6 @@
-import { controls, datesFormNames } from './constants';
+import { CONTROLS, DATES_FORM_NAMES } from './constants';
 
-export type Controls = keyof typeof controls;
+export type Controls = keyof typeof CONTROLS;
 
 export type Team = {
   id: number;
@@ -50,7 +50,7 @@ export type TeamTweets = {
   author_id: string;
 }[];
 
-export type DatesFormNames = keyof typeof datesFormNames;
+export type DatesFormNames = keyof typeof DATES_FORM_NAMES;
 
 export type DatesFormFields = {
   // eslint-disable-next-line no-unused-vars

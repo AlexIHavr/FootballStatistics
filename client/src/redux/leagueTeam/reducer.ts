@@ -1,3 +1,5 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import {
   setSelectedTeam,
   setTeamTweets,
@@ -5,8 +7,7 @@ import {
   setFixtureDetails,
   setSelectedTeamFixtureLastGames,
 } from './thunks';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { controls } from './constants';
+import { CONTROLS } from './constants';
 import {
   Controls,
   InitialState,
@@ -20,7 +21,7 @@ import {
 
 const initialState: InitialState = {
   selectedTeam: null,
-  selectedControl: controls.players,
+  selectedControl: CONTROLS.players,
   teamTweets: [],
   teamFixtures: [],
   selectedTeamFixtureLastGames: [],
@@ -68,7 +69,7 @@ export const leagueTeamSlice = createSlice({
     },
     [setSelectedTeamFixtureLastGames.fulfilled.type]: (
       state,
-      action: PayloadAction<TeamFixtures>
+      action: PayloadAction<TeamFixtures>,
     ) => {
       state.selectedTeamFixtureLastGames = action.payload;
     },

@@ -1,29 +1,23 @@
 import { TextField } from '@mui/material';
-import classNames from 'classnames';
 import React from 'react';
-import { useController } from 'react-hook-form';
-import { DATE_REGEX } from '../../../../../../../constants/app';
-import { datesFormNames } from '../../../../../../../redux/leagueTeam/constants';
-import { DateFieldProps } from '../../../../../../../types/props';
+import { Control, Controller } from 'react-hook-form';
+
+import { DATES_FORM_NAMES } from '../../../../../../../redux/leagueTeam/constants';
+import { DatesFormFields, DatesFormNames } from '../../../../../../../redux/leagueTeam/types';
 
 import './dateField.scss';
 
-const DateField: React.FC<DateFieldProps> = ({ fieldName, control, errors }) => {
-  const { field } = useController({
-    name: datesFormNames[fieldName],
-    control,
-    rules: {
-      required: { value: true, message: 'Field is required' },
-      pattern: { value: DATE_REGEX, message: 'Date must have format: YYYY-MM-DD' },
-    },
-  });
+type DateFieldProps = {
+  fieldName: DatesFormNames;
+  control: Control<DatesFormFields>;
+};
 
+const DateField: React.FC<DateFieldProps> = ({ fieldName, control }) => {
   return (
-    <TextField
-      {...field}
-      className={classNames({ errorDateField: !!errors[fieldName] })}
-      helperText={errors[fieldName] ? errors[fieldName]?.message : ''}
-      error={!!errors[fieldName]}
+    <Controller
+      name={DATES_FORM_NAMES[fieldName]}
+      control={control}
+      render={({ field }) => <TextField {...field} type="date" />}
     />
   );
 };

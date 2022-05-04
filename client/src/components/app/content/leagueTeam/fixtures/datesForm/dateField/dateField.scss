@@ -4,11 +4,7 @@
 
   $borderWidth: 2px;
 
-  &.errorDateField input[type='text']:not(:focus):not(:hover) {
-    border: $borderWidth solid red;
-  }
-
-  input[type='text'] {
+  input[type='date'] {
     margin: 0;
     border: $borderWidth solid green;
     padding-left: 10px;
@@ -23,6 +19,12 @@
     &:hover {
       border: $borderWidth solid;
     }
+
+    &::-webkit-calendar-picker-indicator {
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
     border-radius: 4px;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;

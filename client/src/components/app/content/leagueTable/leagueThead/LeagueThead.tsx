@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux';
 import { LEAGUE_SELECTORS } from '../../../../../redux/leagueTable/constants';
 import { setSelectedLeagueSelector } from '../../../../../redux/leagueTable/reducer';

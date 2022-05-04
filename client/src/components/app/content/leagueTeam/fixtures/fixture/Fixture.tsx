@@ -1,11 +1,18 @@
-import { ListItem } from '@mui/material';
+import { Card } from '@mui/material';
 import classNames from 'classnames';
 import { useEffect } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/redux';
 import { setFixtureDetails } from '../../../../../../redux/leagueTeam/thunks';
-import { FixtureProps } from '../../../../../../types/props';
+import { TeamFixture } from '../../../../../../redux/leagueTeam/types';
 
 import './fixture.scss';
+
+type FixtureProps = {
+  teamFixture: TeamFixture;
+  active?: boolean;
+  showFixtureDetails?: boolean;
+};
 
 const Fixture: React.FC<FixtureProps> = ({
   teamFixture: {
@@ -26,7 +33,7 @@ const Fixture: React.FC<FixtureProps> = ({
   }, [dispatch, id, showFixtureDetails]);
 
   return (
-    <ListItem className={classNames('teamFixture teamItem', { active })}>
+    <Card className={classNames('teamFixture teamItem', { active })}>
       <span>
         {homeTeam.name} - {awayTeam.name}{' '}
         {fullTime.homeTeam !== null && fullTime.awayTeam !== null && (
@@ -51,7 +58,7 @@ const Fixture: React.FC<FixtureProps> = ({
           <span>Draws: {fixtureDetails.homeTeam.draws}</span>
         </>
       )}
-    </ListItem>
+    </Card>
   );
 };
 

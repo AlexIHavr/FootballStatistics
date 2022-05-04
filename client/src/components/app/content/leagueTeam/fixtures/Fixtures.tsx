@@ -1,5 +1,6 @@
 import { Grid } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
+
 import { FIXTURES_DISPLAY_COUNT } from '../../../../../constants/app';
 import { filterByCurrentPage } from '../../../../../helpers/app';
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux';
@@ -7,6 +8,7 @@ import { setSelectedTeamFixture } from '../../../../../redux/leagueTeam/reducer'
 import { setSelectedTeamFixtureLastGames } from '../../../../../redux/leagueTeam/thunks';
 import { TeamFixture } from '../../../../../redux/leagueTeam/types';
 import TeamPagination from '../../../../common/teamPagination/TeamPagination';
+
 import DatesForm from './datesForm/DatesForm';
 import Fixture from './fixture/Fixture';
 
@@ -20,10 +22,8 @@ const Fixtures: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const setSelectedTeamFixtureOnClick = useCallback(
-    (elem: TeamFixture) => {
-      dispatch(setSelectedTeamFixture(elem));
-    },
-    [dispatch]
+    (elem: TeamFixture) => dispatch(setSelectedTeamFixture(elem)),
+    [dispatch],
   );
 
   useEffect(() => {

@@ -1,4 +1,5 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { footballApi, userApi } from './../../api/api';
 import { ShortLeagueNames } from './../leagueTable/types';
 import { GetFavoriteTeamsResponse, LeagueTeams } from './types';
@@ -11,7 +12,7 @@ export const setLeagueTeamsData = createAsyncThunk<LeagueTeams, ShortLeagueNames
       shortName,
       teams: response.data.teams,
     };
-  }
+  },
 );
 
 export const getFavoriteTeams = createAsyncThunk<GetFavoriteTeamsResponse>(
@@ -19,7 +20,7 @@ export const getFavoriteTeams = createAsyncThunk<GetFavoriteTeamsResponse>(
   async () => {
     const response = await userApi.get<GetFavoriteTeamsResponse>('/getFavoriteTeams');
     return response.data;
-  }
+  },
 );
 
 export const addFavoriteTeam = createAsyncThunk<number, number>('addFavoriteTeam', async (id) => {
@@ -32,5 +33,5 @@ export const removeFavoriteTeam = createAsyncThunk<number, number>(
   async (id) => {
     await userApi.delete('/deleteFavoriteTeam', { data: { id } });
     return id;
-  }
+  },
 );

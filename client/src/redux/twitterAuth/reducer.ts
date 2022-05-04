@@ -1,6 +1,7 @@
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
 import { setTwitterRequestTokenUrl } from './thunks';
 import { InitialState } from './types';
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TWITTER_REQUEST_TOKEN_URL } from './constants';
 
 const initialState: InitialState = {

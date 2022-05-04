@@ -1,5 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
 import { Store } from '../store';
+
 import { footballApi, twitterApi } from './../../api/api';
 import { DEFAULT_VALUES_DATES } from './constants';
 import {
@@ -21,7 +23,7 @@ export const setTeamTweets = createAsyncThunk<TeamTweets, string>(
   async (query) => {
     const response = await twitterApi.post<TeamTweets>('/getTweets', { query });
     return response.data;
-  }
+  },
 );
 
 export const setTeamFixtures = createAsyncThunk<
@@ -31,7 +33,7 @@ export const setTeamFixtures = createAsyncThunk<
 >('setTeamFixtures', async ({ teamId, dateFrom, dateTo }, { rejectWithValue }) => {
   try {
     const response = await footballApi.get(
-      `/teams/${teamId}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`
+      `/teams/${teamId}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`,
     );
     return response.data.matches;
   } catch (err: any) {
@@ -44,7 +46,7 @@ export const setFixtureDetails = createAsyncThunk<FixtureDetails, number>(
   async (id) => {
     const response = await footballApi.get(`/matches/${id}`);
     return response.data.head2head;
-  }
+  },
 );
 
 //BUG with {state: Store}!
@@ -55,8 +57,7 @@ export const setSelectedTeamFixtureLastGames = createAsyncThunk<TeamFixtures, Te
       (getState() as Store).leagueTeam.datesFormFields || DEFAULT_VALUES_DATES;
 
     //BUG as string!
-    const matchesUrl =
-      `/teams/${homeTeam.id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}` as string;
+    const matchesUrl: string = `/teams/${homeTeam.id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`;
 
     const response = await footballApi.get<{ matches: TeamFixtures }>(matchesUrl);
 
@@ -71,5 +72,5 @@ export const setSelectedTeamFixtureLastGames = createAsyncThunk<TeamFixtures, Te
 
       return games;
     }, []);
-  }
+  },
 );

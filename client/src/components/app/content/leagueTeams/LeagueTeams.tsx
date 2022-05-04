@@ -1,5 +1,6 @@
 import { Grid, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useCallback } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { LEAGUE_SELECTORS } from '../../../../redux/leagueTable/constants';
 import { setSelectedLeagueSelector } from '../../../../redux/leagueTable/reducer';
@@ -19,11 +20,11 @@ const LeagueTeams: React.FC = () => {
       dispatch(
         setSelectedLeagueSelector(
           LEAGUE_SELECTORS.find(({ shortName }) => shortName === e.target.value) ||
-            selectedLeagueSelector
-        )
+            selectedLeagueSelector,
+        ),
       );
     },
-    [dispatch, selectedLeagueSelector]
+    [dispatch, selectedLeagueSelector],
   );
 
   return (
@@ -53,7 +54,7 @@ const LeagueTeams: React.FC = () => {
             <Grid item xs={6} key={id} className="teamItemWrapper">
               <TeamItem id={id} name={name} shortName={shortName} crestUrl={crestUrl} />
             </Grid>
-          )
+          ),
         )}
       </Grid>
     </div>

@@ -1,22 +1,24 @@
 import { Grid } from '@mui/material';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { params } from '../../../../constants/app';
+
+import { PARAMS } from '../../../../constants/app';
 import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import TeamItem from '../../../common/teamItem/TeamItem';
-import { controls } from '../../../../redux/leagueTeam/constants';
+import { CONTROLS } from '../../../../redux/leagueTeam/constants';
+import { setSelectedTeam } from '../../../../redux/leagueTeam/thunks';
+
 import Players from './players/Players';
 import Fixtures from './fixtures/Fixtures';
 import TabControl from './tabControl/TabControl';
 
 import './leagueTeam.scss';
-import { setSelectedTeam } from '../../../../redux/leagueTeam/thunks';
 
 const LeagueTeam: React.FC = () => {
   const dispatch = useAppDispatch();
   const { selectedTeam, selectedControl } = useAppSelector((state) => state.leagueTeam);
 
-  const { [params.teamId]: teamId } = useParams();
+  const { [PARAMS.teamId]: teamId } = useParams();
 
   useEffect(() => {
     if (teamId && selectedTeam?.id !== Number(teamId)) {
@@ -39,7 +41,7 @@ const LeagueTeam: React.FC = () => {
               />
             </Grid>
           </Grid>
-          {selectedControl === controls.players ? <Players /> : <Fixtures />}
+          {selectedControl === CONTROLS.players ? <Players /> : <Fixtures />}
         </>
       )}
     </div>

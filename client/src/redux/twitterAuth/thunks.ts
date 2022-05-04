@@ -1,4 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+
+import { userApi, twitterApi } from '../../api/api';
+import { Dispatch } from '../store';
+
 import {
   TwitterLoginResponse,
   CheckAuthResponse,
@@ -6,9 +10,7 @@ import {
   OAuthRequestToken,
 } from './types';
 import { OAUTH_ACCESS_TOKEN } from './constants';
-import { userApi, twitterApi } from '../../api/api';
 import { setAuthData } from './reducer';
-import { Dispatch } from '../store';
 
 export const twitterLogin = createAsyncThunk<void, TwitterLoginQueryString, { dispatch: Dispatch }>(
   'twitterLogin',
@@ -26,7 +28,7 @@ export const twitterLogin = createAsyncThunk<void, TwitterLoginQueryString, { di
     localStorage.setItem(OAUTH_ACCESS_TOKEN, oAuthAccessToken);
 
     dispatch(setAuthData({ isAuth: true, userName }));
-  }
+  },
 );
 
 export const checkIsAuth = createAsyncThunk<void, string, { dispatch: Dispatch }>(
@@ -36,7 +38,7 @@ export const checkIsAuth = createAsyncThunk<void, string, { dispatch: Dispatch }
     const { userName } = response.data;
 
     dispatch(setAuthData({ isAuth: true, userName }));
-  }
+  },
 );
 
 export const twitterLogout = createAsyncThunk<void, string, { dispatch: Dispatch }>(
@@ -46,7 +48,7 @@ export const twitterLogout = createAsyncThunk<void, string, { dispatch: Dispatch
     localStorage.removeItem(OAUTH_ACCESS_TOKEN);
 
     dispatch(setAuthData({ isAuth: false, userName: '' }));
-  }
+  },
 );
 
 export const setTwitterRequestTokenUrl = createAsyncThunk<string>(
@@ -55,5 +57,5 @@ export const setTwitterRequestTokenUrl = createAsyncThunk<string>(
     const response = await twitterApi.post<OAuthRequestToken>(`/oauth/getRequestToken`);
 
     return response.data.oAuthToken;
-  }
+  },
 );

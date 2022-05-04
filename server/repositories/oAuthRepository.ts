@@ -1,5 +1,4 @@
 import { OAuth } from 'oauth';
-import config from '../config';
 
 class OAuthRepository {
   oAuth: OAuth;
@@ -12,8 +11,8 @@ class OAuthRepository {
       CUSTOMER_KEY,
       CUSTOMER_SECRET,
       '1.0',
-      config.CLIENT_URL,
-      'HMAC-SHA1'
+      process.env.CLIENT_URL as string,
+      'HMAC-SHA1',
     );
   }
 }

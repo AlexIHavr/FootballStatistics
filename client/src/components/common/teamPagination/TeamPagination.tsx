@@ -1,8 +1,14 @@
 import { Button, ButtonGroup, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useCallback, useMemo } from 'react';
-import { TeamPaginationProps } from '../../../types/props';
 
 import './teamPagination.scss';
+
+type TeamPaginationProps = {
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  itemsCount: number;
+  displayCount: number;
+};
 
 const TeamPagination: React.FC<TeamPaginationProps> = ({
   currentPage,
@@ -16,14 +22,14 @@ const TeamPagination: React.FC<TeamPaginationProps> = ({
     (e: SelectChangeEvent<number>) => {
       setCurrentPage(Number(e.target.value));
     },
-    [setCurrentPage]
+    [setCurrentPage],
   );
 
   const goToPage = useCallback(
     (page: number) => {
       setCurrentPage(page);
     },
-    [setCurrentPage]
+    [setCurrentPage],
   );
 
   return (

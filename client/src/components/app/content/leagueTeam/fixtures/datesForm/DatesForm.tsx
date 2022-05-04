@@ -1,12 +1,17 @@
 import { useCallback, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { params } from '../../../../../../constants/app';
+
+import { PARAMS } from '../../../../../../constants/app';
 import { useAppDispatch, useAppSelector } from '../../../../../../hooks/redux';
-import { datesFormNames, DEFAULT_VALUES_DATES } from '../../../../../../redux/leagueTeam/constants';
+import {
+  DATES_FORM_NAMES,
+  DEFAULT_VALUES_DATES,
+} from '../../../../../../redux/leagueTeam/constants';
 import { setDatesFormFields } from '../../../../../../redux/leagueTeam/reducer';
 import { setTeamFixtures } from '../../../../../../redux/leagueTeam/thunks';
 import { DatesFormFields, DatesFormNames } from '../../../../../../redux/leagueTeam/types';
+
 import DateField from './dateField/DateField';
 
 import './datesForm.scss';
@@ -14,13 +19,9 @@ import './datesForm.scss';
 const DatesForm: React.FC = () => {
   const dispatch = useAppDispatch();
   const { datesFormFields } = useAppSelector((state) => state.leagueTeam);
-  const { [params.teamId]: teamId } = useParams();
+  const { [PARAMS.teamId]: teamId } = useParams();
 
-  const {
-    control,
-    formState: { errors },
-    handleSubmit,
-  } = useForm<DatesFormFields>({
+  const { control, handleSubmit } = useForm<DatesFormFields>({
     mode: 'onBlur',
     defaultValues: datesFormFields || DEFAULT_VALUES_DATES,
   });
@@ -29,9 +30,8 @@ const DatesForm: React.FC = () => {
     (data) => {
       if (
         teamId &&
-        !Object.keys(errors).length &&
         ((Object.keys(data) as DatesFormNames[]).some(
-          (key) => datesFormFields && datesFormFields[key] !== data[key]
+          (key) => datesFormFields && datesFormFields[key] !== data[key],
         ) ||
           !datesFormFields)
       ) {
@@ -39,7 +39,7 @@ const DatesForm: React.FC = () => {
         dispatch(setDatesFormFields(data));
       }
     },
-    [dispatch, teamId, errors, datesFormFields]
+    [dispatch, teamId, datesFormFields],
   );
 
   useEffect(() => {
@@ -49,8 +49,8 @@ const DatesForm: React.FC = () => {
   return (
     <div className="teamItem">
       <form onBlur={handleSubmit(onBlur)} className="datesForm">
-        <DateField fieldName={datesFormNames.dateFrom} control={control} errors={errors} />
-        <DateField fieldName={datesFormNames.dateTo} control={control} errors={errors} />
+        <DateField fieldName={DATES_FORM_NAMES.dateFrom} control={control} />
+        <DateField fieldName={DATES_FORM_NAMES.dateTo} control={control} />
       </form>
     </div>
   );

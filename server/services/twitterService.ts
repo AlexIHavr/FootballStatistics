@@ -7,11 +7,11 @@ import {
   OAuthRequestToken,
   TwitterLoginResponse,
 } from '../types/twitterTypes';
-import { TWITTER_TWEETS_API_URL, TWITTER_USERS_API_URL } from '../constants/twitterConstants';
+import { TWITTER_API_URL } from '../constants/twitterConstants';
 
 class TwitterService {
   async getRequestToken() {
-    const oAuthRequestTokens: OAuthRequestToken = await new Promise((resolve, reject) => {
+    const oAuthRequestToken: OAuthRequestToken = await new Promise((resolve, reject) => {
       oAuthRepository.oAuth.getOAuthRequestToken((err, oAuthToken, oAuthTokenSecret) => {
         if (err) {
           reject(ApiError.oAuthError(err.statusCode, err.data));
@@ -21,7 +21,7 @@ class TwitterService {
       });
     });
 
-    return oAuthRequestTokens;
+    return oAuthRequestToken;
   }
 
   async getAccessTokenWithUserName({
@@ -44,25 +44,28 @@ class TwitterService {
                 userName: results.screen_name,
               });
             }
-          }
+          },
         );
-      }
+      },
     );
 
     return { oAuthAccessTokens, userName };
   }
 
   async getTweets(query: string) {
-    const tweetsResponse = await fetch(TWITTER_TWEETS_API_URL + query, {
-      method: 'GET',
-      headers: { Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}` },
-    });
+    const tweetsResponse = await fetch(
+      `${TWITTER_API_URL}/tweets/search/recent?tweet.fields=created_at,author_id&max_results=10&query=${query}`,
+      {
+        method: 'GET',
+        headers: { Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}` },
+      },
+    );
 
     const tweets = (await tweetsResponse.json()) as TwitterTweetsApiResponse;
 
     const authorIds = tweets.data.map(({ author_id }) => author_id).join(',');
 
-    const usersResponse = await fetch(TWITTER_USERS_API_URL + authorIds, {
+    const usersResponse = await fetch(`${TWITTER_API_URL}/users?ids=${authorIds}`, {
       method: 'GET',
       headers: { Authorization: `Bearer ${process.env.TWITTER_BEARER_TOKEN}` },
     });

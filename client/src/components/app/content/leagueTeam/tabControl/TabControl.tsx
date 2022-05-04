@@ -1,8 +1,9 @@
 import { Grid } from '@mui/material';
 import classNames from 'classnames';
 import { useCallback } from 'react';
+
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux';
-import { controls } from '../../../../../redux/leagueTeam/constants';
+import { CONTROLS_VALUES } from '../../../../../redux/leagueTeam/constants';
 import { setSelectedControl } from '../../../../../redux/leagueTeam/reducer';
 import { Controls } from '../../../../../redux/leagueTeam/types';
 
@@ -16,13 +17,13 @@ const TabControl = () => {
     (control) => {
       dispatch(setSelectedControl(control as Controls));
     },
-    [dispatch]
+    [dispatch],
   );
 
   return (
     <Grid container spacing={1} className="tabControl">
-      {Object.keys(controls).map((control) => (
-        <Grid key={control} item xs={12 / Object.keys(controls).length}>
+      {CONTROLS_VALUES.map((control) => (
+        <Grid key={control} item xs={12 / CONTROLS_VALUES.length}>
           <div
             className={classNames('btn waves-effect', {
               active: selectedControl === control,

@@ -1,6 +1,6 @@
-import { shortLeagueNames } from './constants';
+import { SHORT_LEAGUE_NAMES } from './constants';
 
-export type ShortLeagueNames = keyof typeof shortLeagueNames;
+export type ShortLeagueNames = keyof typeof SHORT_LEAGUE_NAMES;
 
 export type LeagueSelector = {
   name: string;

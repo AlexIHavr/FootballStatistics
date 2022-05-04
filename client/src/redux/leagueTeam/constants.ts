@@ -1,17 +1,19 @@
 /* eslint-disable no-unused-vars */
-export enum controls {
+export enum CONTROLS {
   players = 'players',
   fixtures = 'fixtures',
 }
 
-export enum datesFormNames {
+export const CONTROLS_VALUES = Object.keys(CONTROLS);
+
+export enum DATES_FORM_NAMES {
   dateFrom = 'dateFrom',
   dateTo = 'dateTo',
 }
 
 export const DEFAULT_VALUES_DATES = {
-  [datesFormNames.dateFrom]: new Date().toLocaleDateString('sv-SE'),
-  [datesFormNames.dateTo]: new Date(
-    new Date().getTime() + 60 * 60 * 24 * 1000 * 14
+  [DATES_FORM_NAMES.dateFrom]: new Date().toLocaleDateString('sv-SE'),
+  [DATES_FORM_NAMES.dateTo]: new Date(
+    new Date().getTime() + 60 * 60 * 24 * 1000 * 14,
   ).toLocaleDateString('sv-SE'),
 };

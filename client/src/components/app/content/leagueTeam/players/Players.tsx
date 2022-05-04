@@ -1,12 +1,14 @@
-import { Grid, ListItem, ListItemText } from '@mui/material';
-import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux';
+import { Card, Grid, ListItemText } from '@mui/material';
 import { useEffect, useState } from 'react';
+
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/redux';
 import TeamPagination from '../../../../common/teamPagination/TeamPagination';
-import Player from './player/Player';
 import { PLAYERS_DISPLAY_COUNT } from '../../../../../constants/app';
 import { setTeamTweets } from '../../../../../redux/leagueTeam/thunks';
 import { setTweetsQuery } from '../../../../../redux/leagueTeam/reducer';
 import { filterByCurrentPage } from '../../../../../helpers/app';
+
+import Player from './player/Player';
 
 const Players: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -65,19 +67,17 @@ const Players: React.FC = () => {
             (teamTweets.length ? (
               teamTweets.map(({ id, text, created_at, username }) => (
                 <Grid key={id} item>
-                  <ListItem className="teamItem">
+                  <Card className="teamItem">
                     <ListItemText
                       primary={<h6>{`@${username} at ${new Date(created_at).toDateString()}`}</h6>}
                       secondary={text}
                     />
-                  </ListItem>
+                  </Card>
                 </Grid>
               ))
             ) : (
               <Grid item>
-                <ListItem className="teamItem">
-                  No tweets found for {selectedTeam.shortName}
-                </ListItem>
+                <Card className="teamItem">No tweets found for {selectedTeam.shortName}</Card>
               </Grid>
             ))}
         </Grid>
