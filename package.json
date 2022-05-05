@@ -1,0 +1,23 @@
+{
+  "name": "footballstatistics",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm start --prefix ./server\" \"npm start --prefix ./client\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlexIHavr/FootballStatistics.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AlexIHavr/FootballStatistics/issues"
+  },
+  "homepage": "https://github.com/AlexIHavr/FootballStatistics#readme",
+  "devDependencies": {
+    "concurrently": "^7.0.0"
+  }
+}

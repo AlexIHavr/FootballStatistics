@@ -1,0 +1,35 @@
+.teamItem {
+  display: flex;
+  box-shadow: 0 2px 3px #9f9f9f;
+  padding: 8px 16px;
+  flex-wrap: wrap;
+
+  &:not(.active):not(.error) {
+    background-color: #eeeeee !important;
+  }
+
+  .teamItemAvatar {
+    height: 100px;
+    width: 110px;
+    margin-right: 10px;
+
+    img {
+      width: auto;
+    }
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    -ms-border-radius: 0;
+    -o-border-radius: 0;
+  }
+
+  span {
+    color: black;
+  }
+
+  a.toggleToFavorites {
+    margin-top: 10px;
+    background-color: white;
+    color: green;
+  }
+}

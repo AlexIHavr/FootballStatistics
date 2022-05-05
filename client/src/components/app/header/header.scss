@@ -1,0 +1,32 @@
+nav .nav-wrapper {
+  display: flex;
+  min-width: 700px;
+  background-color: #209030;
+
+  .brand-logo {
+    position: static;
+    margin: 0 30px 0 15px;
+    font-size: 1.6rem;
+  }
+
+  ul {
+    flex-grow: 1;
+    a {
+      font-size: 1.2rem;
+    }
+  }
+
+  .active:not(.brand-logo) {
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  nav .brand-logo {
+    transform: none !important;
+    -webkit-transform: none !important;
+    -moz-transform: none !important;
+    -ms-transform: none !important;
+    -o-transform: none !important;
+  }
+}

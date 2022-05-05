@@ -1,0 +1,15 @@
+.leagueTeamContent .teamItem {
+  .playerShirt {
+    position: relative;
+  }
+
+  .playerNumber {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    top: 40px;
+    right: 5px;
+    margin: 0;
+    z-index: 2;
+  }
+}

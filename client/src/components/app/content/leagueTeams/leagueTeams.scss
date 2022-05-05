@@ -1,0 +1,36 @@
+.leagueTeamsContent {
+  .leagueTeamsHeader.card {
+    background-color: #209030;
+
+    .card-content {
+      padding: 15px;
+      .card-title {
+        font-size: 1.6rem;
+        margin-bottom: 0;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .leagueSelectors {
+    width: 30%;
+    margin: 10px 0;
+    background-color: #eeeeee;
+    box-shadow: 0 2px 3px #9f9f9f;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+
+    #demo-simple-select {
+      padding: 10px;
+    }
+  }
+
+  .teamsList {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0;
+  }
+}
