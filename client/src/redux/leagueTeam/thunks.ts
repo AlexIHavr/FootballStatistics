@@ -3,7 +3,6 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { Store } from '../store';
 
 import { footballApi, twitterApi } from './../../api/api';
-import { DEFAULT_VALUES_DATES } from './constants';
 import {
   FixtureDetails,
   SetTeamFixturesParams,
@@ -53,8 +52,7 @@ export const setFixtureDetails = createAsyncThunk<FixtureDetails, number>(
 export const setSelectedTeamFixtureLastGames = createAsyncThunk<TeamFixtures, TeamFixture>(
   'setSelectedTeamFixtureLastGames',
   async ({ homeTeam, awayTeam }, { getState }) => {
-    const { dateFrom, dateTo } =
-      (getState() as Store).leagueTeam.datesFormFields || DEFAULT_VALUES_DATES;
+    const { dateFrom, dateTo } = (getState() as Store).leagueTeam.datesFormFields;
 
     //BUG as string!
     const matchesUrl: string = `/teams/${homeTeam.id}/matches?dateFrom=${dateFrom}&dateTo=${dateTo}`;

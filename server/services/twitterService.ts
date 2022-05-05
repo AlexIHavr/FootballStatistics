@@ -1,12 +1,12 @@
-import { TwitterTweetsApiResponse, TwitterUsersApiResponse } from './../types/twitterTypes';
+import {
+  GetOAuthAccessToken,
+  TwitterTweetsApiResponse,
+  TwitterUsersApiResponse,
+} from './../types/twitterTypes';
 import fetch from 'node-fetch';
 import ApiError from '../errors/ApiError';
 import oAuthRepository from '../repositories/oAuthRepository';
-import {
-  TwitterLoginRequest,
-  OAuthRequestToken,
-  TwitterLoginResponse,
-} from '../types/twitterTypes';
+import { TwitterLoginRequest, OAuthRequestToken } from '../types/twitterTypes';
 import { TWITTER_API_URL } from '../constants/twitterConstants';
 
 class TwitterService {
@@ -29,7 +29,7 @@ class TwitterService {
     oAuthTokenSecret,
     oAuthVerifier,
   }: TwitterLoginRequest) {
-    const { oAuthAccessTokens, userName }: TwitterLoginResponse = await new Promise(
+    const { oAuthAccessTokens, name }: GetOAuthAccessToken = await new Promise(
       (resolve, reject) => {
         oAuthRepository.oAuth.getOAuthAccessToken(
           oAuthToken,
@@ -41,7 +41,7 @@ class TwitterService {
             } else {
               resolve({
                 oAuthAccessTokens: { oAuthAccessToken, oAuthAccessTokenSecret },
-                userName: results.screen_name,
+                name: results.screen_name,
               });
             }
           },
@@ -49,7 +49,7 @@ class TwitterService {
       },
     );
 
-    return { oAuthAccessTokens, userName };
+    return { oAuthAccessTokens, name };
   }
 
   async getTweets(query: string) {

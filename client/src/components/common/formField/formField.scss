@@ -1,23 +1,17 @@
-.datesForm > div {
+.teamItem form > div {
   width: 60%;
   margin: 5px 0;
 
   $borderWidth: 2px;
 
-  input[type='date'] {
+  input[type] {
     margin: 0;
-    border: $borderWidth solid green;
-    padding-left: 10px;
+    padding: 5px 10px;
     font-size: 1rem;
     background-color: white;
 
     &:focus {
-      border: $borderWidth solid transparent !important;
       box-shadow: none !important;
-    }
-
-    &:hover {
-      border: $borderWidth solid;
     }
 
     &::-webkit-calendar-picker-indicator {
@@ -30,10 +24,5 @@
     -moz-border-radius: 4px;
     -ms-border-radius: 4px;
     -o-border-radius: 4px;
-    transition: none;
-    -webkit-transition: none;
-    -moz-transition: none;
-    -ms-transition: none;
-    -o-transition: none;
   }
 }

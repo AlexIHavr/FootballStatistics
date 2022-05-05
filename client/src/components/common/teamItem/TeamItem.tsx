@@ -43,7 +43,7 @@ const TeamItem: React.FC<TeamItemProps> = ({ id, name, shortName, crestUrl, tabC
         <Avatar className="teamItemAvatar" src={crestUrl} />
       </ListItemAvatar>
       <ListItemText
-        primary={<Link to={`${URLS.teams}/${id}`}>{name}</Link>}
+        primary={<Link to={`${URLS.teams.path}/${id}`}>{name}</Link>}
         secondary={
           <>
             <span>shortName: {shortName}</span>

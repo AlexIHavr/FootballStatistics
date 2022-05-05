@@ -11,8 +11,7 @@ import {
 import { setDatesFormFields } from '../../../../../../redux/leagueTeam/reducer';
 import { setTeamFixtures } from '../../../../../../redux/leagueTeam/thunks';
 import { DatesFormFields, DatesFormNames } from '../../../../../../redux/leagueTeam/types';
-
-import DateField from './dateField/DateField';
+import FormField from '../../../../../common/formField/FormField';
 
 import './datesForm.scss';
 
@@ -23,17 +22,16 @@ const DatesForm: React.FC = () => {
 
   const { control, handleSubmit } = useForm<DatesFormFields>({
     mode: 'onBlur',
-    defaultValues: datesFormFields || DEFAULT_VALUES_DATES,
+    defaultValues: datesFormFields,
   });
 
   const onBlur: SubmitHandler<DatesFormFields> = useCallback(
     (data) => {
       if (
         teamId &&
-        ((Object.keys(data) as DatesFormNames[]).some(
+        (Object.keys(data) as DatesFormNames[]).some(
           (key) => datesFormFields && datesFormFields[key] !== data[key],
-        ) ||
-          !datesFormFields)
+        )
       ) {
         dispatch(setTeamFixtures({ teamId, dateFrom: data.dateFrom, dateTo: data.dateTo }));
         dispatch(setDatesFormFields(data));
@@ -43,14 +41,14 @@ const DatesForm: React.FC = () => {
   );
 
   useEffect(() => {
-    if (!datesFormFields) onBlur(DEFAULT_VALUES_DATES);
-  }, [onBlur, datesFormFields]);
+    if (teamId) dispatch(setTeamFixtures({ teamId, ...DEFAULT_VALUES_DATES }));
+  }, [dispatch, teamId]);
 
   return (
     <div className="teamItem">
-      <form onBlur={handleSubmit(onBlur)} className="datesForm">
-        <DateField fieldName={DATES_FORM_NAMES.dateFrom} control={control} />
-        <DateField fieldName={DATES_FORM_NAMES.dateTo} control={control} />
+      <form onBlur={handleSubmit(onBlur)}>
+        <FormField fieldName={DATES_FORM_NAMES.dateFrom} control={control} type="date" />
+        <FormField fieldName={DATES_FORM_NAMES.dateTo} control={control} type="date" />
       </form>
     </div>
   );

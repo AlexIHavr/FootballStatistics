@@ -1,4 +1,8 @@
-import { FilterByCurrentPageParams } from './../types/helpers';
+interface FilterByCurrentPageParams<T> {
+  items: T[];
+  currentPage: number;
+  displayCount: number;
+}
 
 export const filterByCurrentPage = <T>({
   items,

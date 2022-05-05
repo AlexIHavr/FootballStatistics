@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../../../hooks/redux';
 import { OAUTH_ACCESS_TOKEN } from '../../../../redux/twitterAuth/constants';
 
 const TwitterAuth: React.FC = () => {
-  const { isAuth, userName, twitterRequestTokenUrl, isLoading } = useAppSelector(
+  const { isAuth, userData, twitterRequestTokenUrl, isLoading } = useAppSelector(
     (store) => store.twitterAuth,
   );
   const dispatch = useAppDispatch();
@@ -58,7 +58,7 @@ const TwitterAuth: React.FC = () => {
     <div className="twitterAuth">
       {isAuth ? (
         <>
-          <span>Hello, {userName}!</span>
+          <span>Hello, {userData?.name}!</span>
           <a className="waves-effect btn" target="_blank" rel="noreferrer" onClick={twitterSignOut}>
             Sign out
           </a>

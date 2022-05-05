@@ -1,3 +1,5 @@
+import { UserData } from './userTypes';
+
 export type TwitterLoginRequest = {
   oAuthVerifier: string;
 } & OAuthRequestToken;
@@ -12,7 +14,15 @@ export type TwitterLoginResponse = {
     oAuthAccessToken: string;
     oAuthAccessTokenSecret: string;
   };
-  userName: string;
+  userData: UserData;
+};
+
+export type GetOAuthAccessToken = {
+  oAuthAccessTokens: {
+    oAuthAccessToken: string;
+    oAuthAccessTokenSecret: string;
+  };
+  name: string;
 };
 
 export type GetTweetsRequest = {

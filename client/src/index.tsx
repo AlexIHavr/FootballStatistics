@@ -7,7 +7,7 @@ import { store } from './redux/store';
 import App from './components/app/App';
 
 import './index.scss';
-
+import 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css';
 import 'material-icons/iconfont/material-icons.css';
 

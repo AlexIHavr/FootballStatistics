@@ -122,7 +122,7 @@ export type InitialState = {
   selectedControl: Controls;
   teamTweets: TeamTweets;
   teamFixtures: TeamFixtures;
-  datesFormFields: DatesFormFields | null;
+  datesFormFields: DatesFormFields;
   fixtureDetails: FixtureDetails | null;
   selectedTeamFixtureLastGames: TeamFixtures;
   selectedTeamFixture: TeamFixture | null;
