@@ -1,9 +1,6 @@
 import { USER_DATA } from './constants';
 
-export type UserData = {
-  -readonly // eslint-disable-next-line no-unused-vars
-  [index in keyof typeof USER_DATA]?: string;
-};
+export type UserData = Partial<Record<keyof typeof USER_DATA, string>>;
 
 export type InitialState = {
   isAuth: boolean;

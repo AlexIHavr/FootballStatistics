@@ -52,10 +52,7 @@ export type TeamTweets = {
 
 export type DatesFormNames = keyof typeof DATES_FORM_NAMES;
 
-export type DatesFormFields = {
-  // eslint-disable-next-line no-unused-vars
-  [K in DatesFormNames]: string;
-};
+export type DatesFormFields = Record<DatesFormNames, string>;
 
 export type TeamFixture = {
   id: number;

@@ -7,13 +7,11 @@ export type UserData = {
 };
 
 export type UserSchema = {
-  name: string;
   oAuthAccessToken: string;
   oAuthAccessTokenSecret: string;
-  email: string;
   favoriteTeams: number[];
-  birthDay: string;
-} & Document;
+} & UserData &
+  Document;
 
 export type CheckAuthRequest = {
   oAuthAccessToken: string;

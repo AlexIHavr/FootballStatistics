@@ -1,5 +1,10 @@
 import { UserData } from './userTypes';
 
+export type OAuthAccessTokens = {
+  oAuthAccessToken: string;
+  oAuthAccessTokenSecret: string;
+};
+
 export type TwitterLoginRequest = {
   oAuthVerifier: string;
 } & OAuthRequestToken;
@@ -10,18 +15,12 @@ export type OAuthRequestToken = {
 };
 
 export type TwitterLoginResponse = {
-  oAuthAccessTokens: {
-    oAuthAccessToken: string;
-    oAuthAccessTokenSecret: string;
-  };
+  oAuthAccessTokens: OAuthAccessTokens;
   userData: UserData;
 };
 
 export type GetOAuthAccessToken = {
-  oAuthAccessTokens: {
-    oAuthAccessToken: string;
-    oAuthAccessTokenSecret: string;
-  };
+  oAuthAccessTokens: OAuthAccessTokens;
   name: string;
 };
 

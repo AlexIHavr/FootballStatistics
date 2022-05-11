@@ -4,7 +4,7 @@ import { UserSchema } from '../types/userTypes';
 const userSchema = new Schema({
   name: { type: String, required: true, unique: true },
   email: { type: String, unique: true },
-  favoriteTeams: { type: [Number] },
+  favoriteTeams: { type: [Number], default: [] },
   birthDay: { type: String },
   oAuthAccessToken: { type: String },
   oAuthAccessTokenSecret: { type: String },
