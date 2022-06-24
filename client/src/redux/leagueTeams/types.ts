@@ -23,10 +23,7 @@ export type LeagueTeamData = {
 export type LeagueTeamsData = LeagueTeamData[];
 
 export type InitialState = {
-  leagueTeamsData: Partial<{
-    -readonly // eslint-disable-next-line no-unused-vars
-    [index in ShortLeagueNames]: LeagueTeamsData;
-  }>;
+  leagueTeamsData: Partial<Record<ShortLeagueNames, LeagueTeamsData>>;
   favoriteTeams: number[];
 };
 

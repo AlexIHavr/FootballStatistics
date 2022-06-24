@@ -52,10 +52,7 @@ export type TeamTweets = {
 
 export type DatesFormNames = keyof typeof DATES_FORM_NAMES;
 
-export type DatesFormFields = {
-  // eslint-disable-next-line no-unused-vars
-  [K in DatesFormNames]: string;
-};
+export type DatesFormFields = Record<DatesFormNames, string>;
 
 export type TeamFixture = {
   id: number;
@@ -122,7 +119,7 @@ export type InitialState = {
   selectedControl: Controls;
   teamTweets: TeamTweets;
   teamFixtures: TeamFixtures;
-  datesFormFields: DatesFormFields | null;
+  datesFormFields: DatesFormFields;
   fixtureDetails: FixtureDetails | null;
   selectedTeamFixtureLastGames: TeamFixtures;
   selectedTeamFixture: TeamFixture | null;

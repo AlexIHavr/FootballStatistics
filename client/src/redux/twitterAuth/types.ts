@@ -1,7 +1,12 @@
+import { USER_DATA } from './constants';
+
+export type UserData = Partial<Record<keyof typeof USER_DATA, string>>;
+
 export type InitialState = {
   isAuth: boolean;
-  userName: string;
+  userData: UserData;
   isLoading: boolean;
+  userDataError: string | null;
   twitterRequestTokenUrl: string;
 };
 
@@ -15,11 +20,7 @@ export type TwitterLoginResponse = {
     oAuthAccessToken: string;
     oAuthAccessTokenSecret: string;
   };
-  userName: string;
-};
-
-export type CheckAuthResponse = {
-  userName: string;
+  userData: UserData;
 };
 
 export type TwitterLoginQueryString = {

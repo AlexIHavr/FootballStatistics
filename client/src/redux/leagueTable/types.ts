@@ -27,10 +27,7 @@ export type LeagueTable = {
 
 export type InitialState = {
   selectedLeagueSelector: LeagueSelector;
-  leagueTableData: Partial<{
-    -readonly // eslint-disable-next-line no-unused-vars
-    [index in ShortLeagueNames]: LeagueTable;
-  }>;
+  leagueTableData: Partial<Record<ShortLeagueNames, LeagueTable>>;
 };
 
 export type LeagueTableData = {

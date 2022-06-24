@@ -27,7 +27,7 @@ const LeagueTbody: React.FC = () => {
           <tr key={id}>
             <th>{position}</th>
             <th>
-              <Link to={`${URLS.teams}/${id}`}>{name}</Link>
+              <Link to={`${URLS.teams.path}/${id}`}>{name}</Link>
             </th>
             <th>{playedGames}</th>
             <th>{won}</th>

@@ -10,6 +10,7 @@ import LeagueTable from './leagueTable/LeagueTable';
 import LeagueTeams from './leagueTeams/LeagueTeams';
 import LeagueTeam from './leagueTeam/LeagueTeam';
 import FavoriteTeams from './favoriteTeams/FavoriteTeams';
+import UserProfile from './userProfile/UserProfile';
 
 import './content.scss';
 
@@ -29,12 +30,17 @@ const Content: React.FC = () => {
 
   return (
     <Routes>
-      <Route path={URLS.table} element={<LeagueTable />} />
+      <Route path={URLS.table.path} element={<LeagueTable />} />
 
-      <Route path={URLS.teams} element={<LeagueTeams />} />
-      <Route path={`${URLS.teams}/:${PARAMS.teamId}`} element={<LeagueTeam />} />
+      <Route path={URLS.teams.path} element={<LeagueTeams />} />
+      <Route path={`${URLS.teams.path}/:${PARAMS.teamId}`} element={<LeagueTeam />} />
 
-      <Route path={URLS.favorites} element={<FavoriteTeams />} />
+      {isAuth && (
+        <>
+          <Route path={URLS.favorites.path} element={<FavoriteTeams />} />
+          <Route path={URLS.profile.path} element={<UserProfile />} />
+        </>
+      )}
 
       <Route path="/*" element={<LeagueTable />} />
     </Routes>

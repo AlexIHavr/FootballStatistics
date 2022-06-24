@@ -4,10 +4,7 @@ import { useAppSelector } from '../../../../hooks/redux';
 import TeamItem from '../../../common/teamItem/TeamItem';
 
 const FavoriteTeams: React.FC = () => {
-  const {
-    leagueTeams: { leagueTeamsData, favoriteTeams },
-    twitterAuth: { isAuth },
-  } = useAppSelector((state) => state);
+  const { leagueTeamsData, favoriteTeams } = useAppSelector((state) => state.leagueTeams);
 
   return (
     <div className="leagueTeamContent">
@@ -34,9 +31,7 @@ const FavoriteTeams: React.FC = () => {
           })
         ) : (
           <Grid item>
-            <div className="card">
-              {isAuth ? 'No favorites' : 'Sign in to show favorite teams.'}
-            </div>
+            <div className="card">No favorites</div>
           </Grid>
         )}
       </Grid>

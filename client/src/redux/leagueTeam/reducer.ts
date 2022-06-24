@@ -7,7 +7,7 @@ import {
   setFixtureDetails,
   setSelectedTeamFixtureLastGames,
 } from './thunks';
-import { CONTROLS } from './constants';
+import { CONTROLS, DEFAULT_VALUES_DATES } from './constants';
 import {
   Controls,
   InitialState,
@@ -29,7 +29,7 @@ const initialState: InitialState = {
   fixtureDetails: null,
   teamFixturesError: '',
   tweetsQuery: '',
-  datesFormFields: null,
+  datesFormFields: DEFAULT_VALUES_DATES,
 };
 
 export const leagueTeamSlice = createSlice({

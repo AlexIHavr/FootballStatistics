@@ -1,15 +1,15 @@
 import { UserSchema } from './../types/userTypes';
 import ApiError from '../errors/ApiError';
 import userModel from '../models/userModel';
-import { TwitterLoginResponse } from '../types/twitterTypes';
+import { GetOAuthAccessToken } from '../types/twitterTypes';
 import { FilterQuery } from 'mongoose';
 
 class UserService {
   async create({
-    userName,
+    name,
     oAuthAccessTokens: { oAuthAccessToken, oAuthAccessTokenSecret },
-  }: TwitterLoginResponse) {
-    const newUser = await userModel.create({ userName, oAuthAccessToken, oAuthAccessTokenSecret });
+  }: GetOAuthAccessToken) {
+    const newUser = await userModel.create({ name, oAuthAccessToken, oAuthAccessTokenSecret });
 
     return newUser;
   }
